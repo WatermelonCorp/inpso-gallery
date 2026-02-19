@@ -1,12 +1,20 @@
 
-import { Home } from "@/page/home";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HomePage } from "@/app/page";
+import { ThemeProvider } from "@/components/layout/theme-provider";
+import { Navbar } from "@/components/layout/navbar";
 
-export function App() {
+function App() {
   return (
-    <div>
-      <Home />
-    </div>
-  )
+    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+      <BrowserRouter>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+        </Routes>
+      </BrowserRouter>
+    </ThemeProvider>
+  );
 }
 
 export default App;
