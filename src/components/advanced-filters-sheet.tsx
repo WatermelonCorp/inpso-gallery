@@ -20,7 +20,8 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Check } from "lucide-react";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { Tick01Icon } from "@hugeicons/core-free-icons";
 import type { FilterState } from "@/lib/filter-sites";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -42,7 +43,7 @@ export function AdvancedFiltersSheet({
   const isMobile = useIsMobile();
 
   const toggleArrayFilter = (
-    key: keyof Pick<FilterState, "tech" | "platform" | "animation" | "style" | "color" | "layout">,
+    key: keyof Pick<FilterState, "aesthetics" | "effects" | "typography" | "composition" | "colorScheme" | "interaction">,
     value: string
   ) => {
     setFilters((prev) => {
@@ -57,12 +58,12 @@ export function AdvancedFiltersSheet({
   const resetFilters = () => {
     setFilters((prev) => ({
       ...prev,
-      tech: [],
-      platform: [],
-      animation: [],
-      style: [],
-      color: [],
-      layout: [],
+      aesthetics: [],
+      effects: [],
+      typography: [],
+      composition: [],
+      colorScheme: [],
+      interaction: [],
       sort: "newest",
     }));
   };
@@ -73,7 +74,7 @@ export function AdvancedFiltersSheet({
     options,
   }: {
     title: string;
-    filterKey: keyof Pick<FilterState, "tech" | "platform" | "animation" | "style" | "color" | "layout">;
+    filterKey: keyof Pick<FilterState, "aesthetics" | "effects" | "typography" | "composition" | "colorScheme" | "interaction">;
     options: Record<string, number>;
   }) => (
     <div className="mb-6">
@@ -85,13 +86,13 @@ export function AdvancedFiltersSheet({
             <Badge
               key={option}
               variant={isSelected ? "default" : "outline"}
-              className={`cursor-pointer transition-all active:scale-95 ${isSelected ? "" : "hover:bg-accent hover:text-accent-foreground"
+              className={`cursor-pointer transition-all duration-200 active:scale-95 ${isSelected ? "shadow-sm shadow-primary/20" : "hover:bg-accent hover:text-accent-foreground"
                 }`}
               onClick={() => toggleArrayFilter(filterKey, option)}
             >
               {option}
               <span className="ml-1.5 opacity-60 text-[10px]">{count}</span>
-              {isSelected && <Check className="ml-1 h-3 w-3" />}
+              {isSelected && <HugeiconsIcon icon={Tick01Icon} className="ml-1 h-3 w-3" />}
             </Badge>
           );
         })}
@@ -120,12 +121,12 @@ export function AdvancedFiltersSheet({
 
       <Separator className="my-6" />
 
-      <FilterGroup title="Tech Stack" filterKey="tech" options={counts.tech} />
-      <FilterGroup title="Platform" filterKey="platform" options={counts.platform} />
-      <FilterGroup title="Animation" filterKey="animation" options={counts.animation} />
-      <FilterGroup title="Style" filterKey="style" options={counts.style} />
-      <FilterGroup title="Color" filterKey="color" options={counts.color} />
-      <FilterGroup title="Layout" filterKey="layout" options={counts.layout} />
+      <FilterGroup title="Design Aesthetics" filterKey="aesthetics" options={counts.aesthetics || {}} />
+      <FilterGroup title="Visual Effects" filterKey="effects" options={counts.effects || {}} />
+      <FilterGroup title="Typography" filterKey="typography" options={counts.typography || {}} />
+      <FilterGroup title="Composition" filterKey="composition" options={counts.composition || {}} />
+      <FilterGroup title="Color Scheme" filterKey="colorScheme" options={counts.colorScheme || {}} />
+      <FilterGroup title="Interaction" filterKey="interaction" options={counts.interaction || {}} />
     </div>
   );
 
@@ -135,15 +136,15 @@ export function AdvancedFiltersSheet({
         <SheetContent className="w-full sm:max-w-md overflow-hidden flex flex-col p-0">
           <SheetHeader className="px-6 pt-6 pb-4 border-b">
             <SheetTitle className="text-xl">Filters</SheetTitle>
-            <SheetDescription>Refine your inspiration search.</SheetDescription>
+            <SheetDescription>Refine by design style, effects, and more.</SheetDescription>
           </SheetHeader>
           <FilterContent />
           <SheetFooter className="px-6 py-6 border-t mt-auto bg-muted/20">
             <Button variant="outline" className="w-full" onClick={resetFilters}>
               Reset all
             </Button>
-            <SheetClose>
-              <Button className="w-full">Show Results</Button>
+            <SheetClose render={<Button className="w-full" />}>
+              Show Results
             </SheetClose>
           </SheetFooter>
         </SheetContent>
@@ -156,7 +157,7 @@ export function AdvancedFiltersSheet({
       <DrawerContent className="h-[85vh] flex flex-col">
         <DrawerHeader className="text-left px-6 border-b pb-4">
           <DrawerTitle className="text-xl">Filters</DrawerTitle>
-          <DrawerDescription>Refine your inspiration search.</DrawerDescription>
+          <DrawerDescription>Refine by design style, effects, and more.</DrawerDescription>
         </DrawerHeader>
         <FilterContent />
         <DrawerFooter className="px-6 py-6 border-t bg-muted/20">
@@ -164,7 +165,7 @@ export function AdvancedFiltersSheet({
           <Button variant="outline" className="w-full" onClick={resetFilters}>
             Reset all
           </Button>
-          <DrawerClose>
+          <DrawerClose asChild>
             <Button variant="ghost" className="w-full">Cancel</Button>
           </DrawerClose>
         </DrawerFooter>

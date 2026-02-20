@@ -18,13 +18,15 @@ interface SiteMetadata {
   category: string;
   tags: string[];
   tech: string[];
-  platform: string[];
-  animation: string[];
-  style: string[];
-  color: string[];
-  layout: string[];
+  aesthetics: string[];
+  effects: string[];
+  typography: string[];
+  composition: string[];
+  colorScheme: string[];
+  interaction: string[];
   featured: boolean;
   thumbnail: string;
+  images: string[];
   date: string;
 }
 
@@ -62,13 +64,15 @@ export interface SiteMetadata {
   category: string;
   tags: string[];
   tech: string[];
-  platform: string[];
-  animation: string[];
-  style: string[];
-  color: string[];
-  layout: string[];
+  aesthetics: string[];
+  effects: string[];
+  typography: string[];
+  composition: string[];
+  colorScheme: string[];
+  interaction: string[];
   featured: boolean;
   thumbnail: string;
+  images: string[];
   date: string;
 }
 

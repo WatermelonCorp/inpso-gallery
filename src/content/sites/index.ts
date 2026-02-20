@@ -9,11 +9,12 @@ export interface SiteMetadata {
   category: string;
   tags: string[];
   tech: string[];
-  platform: string[];
-  animation: string[];
-  style: string[];
-  color: string[];
-  layout: string[];
+  aesthetics: string[];
+  effects: string[];
+  typography: string[];
+  composition: string[];
+  colorScheme: string[];
+  interaction: string[];
   featured: boolean;
   thumbnail: string;
   images: string[];
@@ -26,34 +27,15 @@ export const sites: SiteMetadata[] = [
     "slug": "shadcn-ui",
     "url": "https://ui.shadcn.com",
     "description": "Beautifully designed components that you can copy and paste into your apps",
-    "category": "tools",
-    "tags": [
-      "react",
-      "nextjs",
-      "accessible"
-    ],
-    "tech": [
-      "react",
-      "nextjs",
-      "radix-ui"
-    ],
-    "platform": [
-      "custom"
-    ],
-    "animation": [
-      "css"
-    ],
-    "style": [
-      "minimal",
-      "clean"
-    ],
-    "color": [
-      "light",
-      "dark"
-    ],
-    "layout": [
-      "grid"
-    ],
+    "category": "product design",
+    "tags": ["accessible", "components"],
+    "tech": ["radix-ui"],
+    "aesthetics": ["minimalism", "swiss"],
+    "effects": ["blur"],
+    "typography": ["sans-serif", "variable"],
+    "composition": ["grid", "cards", "whitespace"],
+    "colorScheme": ["light-mode", "dark-mode", "monochrome"],
+    "interaction": ["hover-effects", "micro-interactions"],
     "featured": true,
     "thumbnail": "/images/shadcn.png",
     "images": ["/images/shadcn.png"],
@@ -63,36 +45,171 @@ export const sites: SiteMetadata[] = [
     "name": "Aceternity UI",
     "slug": "aceternity-ui",
     "url": "https://ui.aceternity.com",
-    "description": "Animated React component library",
-    "category": "tools",
-    "tags": [
-      "react",
-      "nextjs",
-      "animated"
-    ],
-    "tech": [
-      "react",
-      "nextjs"
-    ],
-    "platform": [
-      "custom"
-    ],
-    "animation": [
-      "framer-motion"
-    ],
-    "style": [
-      "minimal",
-      "modern"
-    ],
-    "color": [
-      "dark"
-    ],
-    "layout": [
-      "grid"
-    ],
+    "description": "Animated React component library with stunning visual effects",
+    "category": "product design",
+    "tags": ["animated", "components"],
+    "tech": ["framer-motion"],
+    "aesthetics": ["futuristic", "glassmorphism"],
+    "effects": ["gradients", "blur", "3d", "parallax"],
+    "typography": ["sans-serif", "display"],
+    "composition": ["grid", "bento", "full-bleed"],
+    "colorScheme": ["dark-mode", "vibrant", "neon"],
+    "interaction": ["scroll-animations", "hover-effects", "micro-interactions", "cursor-effects"],
     "featured": true,
     "thumbnail": "/images/aceternity.png",
     "images": ["/images/aceternity.png"],
     "date": "2026-01-01"
+  },
+  {
+    "name": "Stripe",
+    "slug": "stripe",
+    "url": "https://stripe.com",
+    "description": "Financial infrastructure for the internet with world-class design",
+    "category": "landing page",
+    "tags": ["fintech", "saas", "iconic"],
+    "tech": [],
+    "aesthetics": ["minimalism", "futuristic"],
+    "effects": ["gradients", "3d", "morph"],
+    "typography": ["sans-serif", "variable"],
+    "composition": ["full-bleed", "split-screen", "whitespace"],
+    "colorScheme": ["vibrant", "dark-mode"],
+    "interaction": ["scroll-animations", "hover-effects", "page-transitions", "micro-interactions"],
+    "featured": true,
+    "thumbnail": "/images/shadcn.png",
+    "images": ["/images/shadcn.png"],
+    "date": "2026-01-20"
+  },
+  {
+    "name": "Linear",
+    "slug": "linear",
+    "url": "https://linear.app",
+    "description": "The issue tracking tool you'll enjoy using",
+    "category": "product design",
+    "tags": ["saas", "productivity", "devtools"],
+    "tech": [],
+    "aesthetics": ["minimalism", "futuristic"],
+    "effects": ["blur", "gradients", "noise"],
+    "typography": ["sans-serif"],
+    "composition": ["grid", "whitespace", "cards"],
+    "colorScheme": ["dark-mode", "muted", "duotone"],
+    "interaction": ["micro-interactions", "hover-effects", "page-transitions"],
+    "featured": true,
+    "thumbnail": "/images/aceternity.png",
+    "images": ["/images/aceternity.png"],
+    "date": "2026-01-18"
+  },
+  {
+    "name": "Diagram",
+    "slug": "diagram",
+    "url": "https://diagram.com",
+    "description": "AI-powered design tools for the next generation of designers",
+    "category": "landing page",
+    "tags": ["ai", "design-tools", "3d"],
+    "tech": ["react", "threejs"],
+    "aesthetics": ["futuristic", "organic"],
+    "effects": ["3d", "morph", "gradients", "parallax"],
+    "typography": ["display", "oversized"],
+    "composition": ["full-bleed", "overlap", "asymmetric"],
+    "colorScheme": ["dark-mode", "vibrant", "neon"],
+    "interaction": ["scroll-animations", "cursor-effects", "loading-animations", "page-transitions"],
+    "featured": true,
+    "thumbnail": "/images/shadcn.png",
+    "images": ["/images/shadcn.png"],
+    "date": "2026-01-25"
+  },
+  {
+    "name": "Vercel",
+    "slug": "vercel",
+    "url": "https://vercel.com",
+    "description": "Develop. Preview. Ship. The platform for frontend developers",
+    "category": "landing page",
+    "tags": ["devtools", "hosting", "nextjs"],
+    "tech": [],
+    "aesthetics": ["minimalism", "swiss"],
+    "effects": ["gradients", "blur", "noise"],
+    "typography": ["sans-serif", "monospace"],
+    "composition": ["grid", "whitespace", "bento"],
+    "colorScheme": ["dark-mode", "monochrome", "high-contrast"],
+    "interaction": ["hover-effects", "page-transitions", "micro-interactions"],
+    "featured": false,
+    "thumbnail": "/images/aceternity.png",
+    "images": ["/images/aceternity.png"],
+    "date": "2026-01-10"
+  },
+  {
+    "name": "Cosmos",
+    "slug": "cosmos",
+    "url": "https://cosmos.so",
+    "description": "Visual bookmarking and mood boards for creative professionals",
+    "category": "product design",
+    "tags": ["creative", "bookmarks", "visual"],
+    "tech": [],
+    "aesthetics": ["minimalism", "editorial"],
+    "effects": ["blur", "grain"],
+    "typography": ["serif", "display"],
+    "composition": ["masonry", "cards", "whitespace"],
+    "colorScheme": ["light-mode", "muted", "monochrome"],
+    "interaction": ["hover-effects", "micro-interactions"],
+    "featured": false,
+    "thumbnail": "/images/shadcn.png",
+    "images": ["/images/shadcn.png"],
+    "date": "2026-02-01"
+  },
+  {
+    "name": "Basement Studio",
+    "slug": "basement-studio",
+    "url": "https://basement.studio",
+    "description": "Digital design studio pushing boundaries with bold visual experiments",
+    "category": "branding",
+    "tags": ["agency", "creative", "experimental"],
+    "tech": ["react", "threejs", "gsap"],
+    "aesthetics": ["brutalism", "futuristic"],
+    "effects": ["glitch", "noise", "3d", "grain", "dither"],
+    "typography": ["monospace", "oversized", "display"],
+    "composition": ["full-bleed", "asymmetric", "overlap"],
+    "colorScheme": ["dark-mode", "high-contrast", "monochrome"],
+    "interaction": ["cursor-effects", "scroll-animations", "page-transitions", "loading-animations"],
+    "featured": true,
+    "thumbnail": "/images/aceternity.png",
+    "images": ["/images/aceternity.png"],
+    "date": "2026-02-05"
+  },
+  {
+    "name": "Daylight Computer",
+    "slug": "daylight-computer",
+    "url": "https://daylightcomputer.com",
+    "description": "A new kind of computer designed for the human eye",
+    "category": "landing page",
+    "tags": ["hardware", "e-ink", "product"],
+    "tech": ["nextjs", "framer-motion"],
+    "aesthetics": ["retro", "organic", "skeuomorphism"],
+    "effects": ["dither", "halftone", "grain", "noise"],
+    "typography": ["serif", "variable"],
+    "composition": ["split-screen", "whitespace", "full-bleed"],
+    "colorScheme": ["earth-tones", "muted", "pastel"],
+    "interaction": ["scroll-animations", "hover-effects"],
+    "featured": false,
+    "thumbnail": "/images/shadcn.png",
+    "images": ["/images/shadcn.png"],
+    "date": "2026-02-08"
+  },
+  {
+    "name": "Rauno Freiberg",
+    "slug": "rauno-freiberg",
+    "url": "https://rauno.me",
+    "description": "Personal portfolio of a design engineer at Vercel",
+    "category": "branding",
+    "tags": ["portfolio", "personal", "design-engineer"],
+    "tech": [],
+    "aesthetics": ["minimalism", "editorial"],
+    "effects": ["blur", "noise"],
+    "typography": ["serif", "sans-serif"],
+    "composition": ["whitespace", "asymmetric"],
+    "colorScheme": ["light-mode", "monochrome", "muted"],
+    "interaction": ["micro-interactions", "hover-effects", "page-transitions"],
+    "featured": false,
+    "thumbnail": "/images/aceternity.png",
+    "images": ["/images/aceternity.png"],
+    "date": "2026-02-10"
   }
 ];

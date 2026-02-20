@@ -1,46 +1,53 @@
 
-import { SlidersHorizontal, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import type { FilterState } from "@/lib/filter-sites";
+import { PrimaryButton } from "./primary-button";
+import { HugeiconsIcon } from "@hugeicons/react";
+import { X, SlidersHorizontal } from "@hugeicons/core-free-icons";
+import { motion } from "motion/react"
 
 interface FilterBarProps {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   onOpenAdvancedFilters: () => void;
-  uniqueTags: string[];
 }
 
-const CATEGORIES = ["all", "inspiration", "tools", "saas", "portfolio", "landing-page"];
+const CATEGORIES = ["all", "landing page", "product design", "mobile app", "dashboards", "branding", "motion design"];
 
-export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, uniqueTags }: FilterBarProps) {
+const DESIGN_QUICK_TAGS = [
+  "minimalism", "glassmorphism", "brutalism", "neomorphism", "retro",
+  "futuristic", "organic", "editorial", "swiss", "skeuomorphism",
+];
+
+export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: FilterBarProps) {
 
 
   const handleCategoryChange = (value: string) => {
     setFilters((prev) => ({ ...prev, category: value }));
   };
 
-  const toggleTag = (tag: string) => {
+  const toggleAesthetic = (tag: string) => {
     setFilters(prev => {
-      const newTags = prev.tags.includes(tag)
-        ? prev.tags.filter(t => t !== tag)
-        : [...prev.tags, tag];
-      return { ...prev, tags: newTags };
-    })
-  }
+      const newAesthetics = prev.aesthetics.includes(tag)
+        ? prev.aesthetics.filter(t => t !== tag)
+        : [...prev.aesthetics, tag];
+      return { ...prev, aesthetics: newAesthetics };
+    });
+  };
 
   const clearFilters = () => {
     setFilters(prev => ({
       ...prev,
       search: "",
       tags: [],
-      tech: [],
-      platform: [],
-      animation: [],
-      style: [],
-      color: [],
-      layout: [],
+      aesthetics: [],
+      effects: [],
+      typography: [],
+      composition: [],
+      colorScheme: [],
+      interaction: [],
       sort: "newest",
       featured: false,
     }));
@@ -48,20 +55,17 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, uniqueTa
 
   const activeFilterCount = [
     ...filters.tags,
-    ...filters.tech,
-    ...filters.platform,
-    ...filters.animation,
-    ...filters.style,
-    ...filters.color,
-    ...filters.layout
+    ...filters.aesthetics,
+    ...filters.effects,
+    ...filters.typography,
+    ...filters.composition,
+    ...filters.colorScheme,
+    ...filters.interaction,
   ].length + (filters.featured ? 1 : 0);
 
   return (
-    <div className="w-full space-y-6 sticky top-16 z-30 bg-background/95 backdrop-blur-md pt-6 pb-2 border-b">
+    <div className="w-full space-y-6 sticky top-16 z-40 bg-background backdrop-blur-md pt-6 pb-2">
       <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
-
-        {/* Search */}
-
 
         {/* Categories */}
         <Tabs value={filters.category} onValueChange={handleCategoryChange} className="w-full md:w-auto overflow-hidden">
@@ -82,31 +86,32 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, uniqueTa
         <div className="flex items-center gap-2 w-full md:w-auto justify-end">
           {(activeFilterCount > 0 || filters.search) && (
             <Button variant="ghost" size="sm" onClick={clearFilters} className="text-muted-foreground hover:text-foreground">
-              <X className="h-4 w-4 mr-2" />
+              <HugeiconsIcon icon={X} className="h-4 w-4 mr-2" />
               Clear
             </Button>
           )}
 
-          <Button variant={activeFilterCount > 0 ? "secondary" : "outline"} onClick={onOpenAdvancedFilters} className="gap-2 relative">
-            <SlidersHorizontal className="h-4 w-4" />
-            Filters
-            {activeFilterCount > 0 && (
-              <Badge variant="default" className="ml-1 h-5 w-5 p-0 flex items-center justify-center rounded-full text-[10px]">
-                {activeFilterCount}
-              </Badge>
-            )}
-          </Button>
+          <PrimaryButton variant={activeFilterCount > 0 ? "outline" : "default"} onClick={onOpenAdvancedFilters} iconLeft={<HugeiconsIcon icon={SlidersHorizontal} className="h-4 w-4" />}>
+            <motion.span layout className="flex items-center gap-2">
+              Filters
+              {activeFilterCount > 0 && (
+                <Badge variant="default" className="size-7.5 p-0 flex items-center justify-center rounded-md text-[10px] -mr-3.5">
+                  {activeFilterCount}
+                </Badge>
+              )}
+            </motion.span>
+          </PrimaryButton>
         </div>
       </div>
 
-      {/* Quick Tags (Optional: specific highly used tags) */}
+      {/* Quick Design Tags */}
       <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
-        {uniqueTags.slice(0, 8).map(tag => (
+        {DESIGN_QUICK_TAGS.map(tag => (
           <Badge
             key={tag}
-            variant={filters.tags.includes(tag) ? "default" : "outline"}
-            className="cursor-pointer transition-colors whitespace-nowrap rounded-md text-sm h-7"
-            onClick={() => toggleTag(tag)}
+            variant={filters.aesthetics.includes(tag) ? "default" : "outline"}
+            className="cursor-pointer transition-all duration-200 whitespace-nowrap rounded-md text-sm h-7 active:scale-95"
+            onClick={() => toggleAesthetic(tag)}
           >
             {tag}
           </Badge>

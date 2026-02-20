@@ -1,6 +1,6 @@
 import * as React from "react"
 import { useNavigate } from "react-router-dom"
-import { Calendar, Search } from "lucide-react"
+
 
 import {
   CommandDialog,
@@ -20,6 +20,8 @@ import {
 } from "@/components/ui/input-group"
 
 import { sites } from "@/content/sites"
+import { HugeiconsIcon } from "@hugeicons/react"
+import { Command, Search01Icon, Home01Icon } from "@hugeicons/core-free-icons"
 
 export function CommandMenu() {
   const [open, setOpen] = React.useState(false)
@@ -60,7 +62,7 @@ export function CommandMenu() {
       >
         {/* Search Icon */}
         <InputGroupAddon>
-          <Search className="h-4 w-4 text-muted-foreground" />
+          <HugeiconsIcon icon={Search01Icon} className="h-4 w-4 text-muted-foreground" />
         </InputGroupAddon>
 
         {/* Fake Input */}
@@ -78,8 +80,9 @@ export function CommandMenu() {
 
         {/* Right Side */}
         <InputGroupAddon align="inline-end" className="pl-2 sm:pl-0">
-          <kbd className="flex items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium">
-            <span className="text-xs">⌘</span>K
+          <kbd className="flex items-center gap-1 p-1.5 rounded border bg-muted font-mono text-[10px] font-medium">
+            <HugeiconsIcon icon={Command} size={14} />
+            K
           </kbd>
         </InputGroupAddon>
       </InputGroup>
@@ -92,7 +95,7 @@ export function CommandMenu() {
 
           <CommandGroup heading="Suggestions">
             <CommandItem onSelect={() => runCommand(() => navigate("/"))}>
-              <Calendar className="mr-2 h-4 w-4" />
+              <HugeiconsIcon icon={Home01Icon} className="mr-2 h-4 w-4" />
               <span>Home</span>
             </CommandItem>
           </CommandGroup>

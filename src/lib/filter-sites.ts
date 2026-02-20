@@ -5,12 +5,12 @@ export interface FilterState {
   search: string;
   category: string;
   tags: string[];
-  tech: string[];
-  platform: string[];
-  animation: string[];
-  style: string[];
-  color: string[];
-  layout: string[];
+  aesthetics: string[];
+  effects: string[];
+  typography: string[];
+  composition: string[];
+  colorScheme: string[];
+  interaction: string[];
   featured: boolean;
   sort: 'newest' | 'featured' | 'alphabetical';
 }
@@ -19,12 +19,12 @@ export const initialFilterState: FilterState = {
   search: "",
   category: "all",
   tags: [],
-  tech: [],
-  platform: [],
-  animation: [],
-  style: [],
-  color: [],
-  layout: [],
+  aesthetics: [],
+  effects: [],
+  typography: [],
+  composition: [],
+  colorScheme: [],
+  interaction: [],
   featured: false,
   sort: "newest",
 };
@@ -38,7 +38,9 @@ export function filterSites(sites: SiteMetadata[], filters: FilterState): SiteMe
         site.name.toLowerCase().includes(searchLower) ||
         site.description.toLowerCase().includes(searchLower) ||
         site.tags.some((tag) => tag.toLowerCase().includes(searchLower)) ||
-        site.tech.some((t) => t.toLowerCase().includes(searchLower));
+        site.tech.some((t) => t.toLowerCase().includes(searchLower)) ||
+        site.aesthetics.some((a) => a.toLowerCase().includes(searchLower)) ||
+        site.effects.some((e) => e.toLowerCase().includes(searchLower));
 
       if (!matchesSearch) return false;
     }
@@ -61,12 +63,12 @@ export function filterSites(sites: SiteMetadata[], filters: FilterState): SiteMe
     };
 
     if (!checkArrayFilter(site.tags, filters.tags)) return false;
-    if (!checkArrayFilter(site.tech, filters.tech)) return false;
-    if (!checkArrayFilter(site.platform, filters.platform)) return false;
-    if (!checkArrayFilter(site.animation, filters.animation)) return false;
-    if (!checkArrayFilter(site.style, filters.style)) return false;
-    if (!checkArrayFilter(site.color, filters.color)) return false;
-    if (!checkArrayFilter(site.layout, filters.layout)) return false;
+    if (!checkArrayFilter(site.aesthetics, filters.aesthetics)) return false;
+    if (!checkArrayFilter(site.effects, filters.effects)) return false;
+    if (!checkArrayFilter(site.typography, filters.typography)) return false;
+    if (!checkArrayFilter(site.composition, filters.composition)) return false;
+    if (!checkArrayFilter(site.colorScheme, filters.colorScheme)) return false;
+    if (!checkArrayFilter(site.interaction, filters.interaction)) return false;
 
     return true;
   }).sort((a, b) => {
