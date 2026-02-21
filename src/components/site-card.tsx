@@ -307,7 +307,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
                 <div className="fixed inset-0 z-110 flex items-center justify-center pointer-events-none p-4">
                   <motion.div
                     layoutId={`card-${cardId}`}
-                    className="relative w-[90vw] max-w-6xl max-h-[88vh] flex flex-col bg-muted backdrop-blur-md border border-border/40 overflow-hidden shadow-2xl p-2 pointer-events-auto rounded-2xl"
+                    className="relative w-[90vw] max-w-6xl max-h-[88vh] flex flex-col bg-muted backdrop-blur-md border border-border/40 overflow-hidden shadow-2xl p-2 pointer-events-auto"
                     transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
                   >
                     {/* Close button */}
