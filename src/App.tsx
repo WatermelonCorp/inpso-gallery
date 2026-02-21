@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "@/pages/page";
 import { ThemeProvider } from "@/components/layout/theme-provider";
 import { Navbar } from "@/components/layout/navbar";
+import { Footer } from "@/components/layout/footer";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
         </Routes>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

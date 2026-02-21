@@ -38,7 +38,6 @@ export function filterSites(sites: SiteMetadata[], filters: FilterState): SiteMe
         site.name.toLowerCase().includes(searchLower) ||
         site.description.toLowerCase().includes(searchLower) ||
         site.tags.some((tag) => tag.toLowerCase().includes(searchLower)) ||
-        site.tech.some((t) => t.toLowerCase().includes(searchLower)) ||
         site.aesthetics.some((a) => a.toLowerCase().includes(searchLower)) ||
         site.effects.some((e) => e.toLowerCase().includes(searchLower));
 

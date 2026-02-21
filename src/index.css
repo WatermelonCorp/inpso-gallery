@@ -122,11 +122,11 @@
   }
 
   body {
-    @apply font-sans bg-background text-foreground;
+    @apply font-sans bg-background text-foreground overscroll-none;
   }
 
   html {
-    @apply font-sans;
+    @apply font-sans overscroll-none;
   }
 }
 

@@ -20,8 +20,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { HugeiconsIcon } from "@hugeicons/react";
-import { Tick01Icon } from "@hugeicons/core-free-icons";
+
 import type { FilterState } from "@/lib/filter-sites";
 import { useIsMobile } from "@/hooks/use-mobile";
 
@@ -80,19 +79,17 @@ export function AdvancedFiltersSheet({
     <div className="mb-6">
       <h4 className="mb-3 text-sm font-medium text-foreground uppercase tracking-wider">{title}</h4>
       <div className="flex flex-wrap gap-2">
-        {Object.entries(options).map(([option, count]) => {
+        {Object.entries(options).map(([option]) => {
           const isSelected = (filters[filterKey] as string[]).includes(option);
           return (
             <Badge
               key={option}
               variant={isSelected ? "default" : "outline"}
-              className={`cursor-pointer transition-all duration-200 active:scale-95 ${isSelected ? "shadow-sm shadow-primary/20" : "hover:bg-accent hover:text-accent-foreground"
+              className={`cursor-pointer transition-all duration-200 active:scale-95 w-auto capitalize whitespace-nowrap rounded-md text-sm h-7 ${isSelected ? "shadow-sm shadow-primary/20" : "hover:bg-accent hover:text-accent-foreground"
                 }`}
               onClick={() => toggleArrayFilter(filterKey, option)}
             >
               {option}
-              <span className="ml-1.5 opacity-60 text-[10px]">{count}</span>
-              {isSelected && <HugeiconsIcon icon={Tick01Icon} className="ml-1 h-3 w-3" />}
             </Badge>
           );
         })}

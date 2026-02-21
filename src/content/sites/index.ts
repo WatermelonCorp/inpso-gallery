@@ -8,7 +8,6 @@ export interface SiteMetadata {
   description: string;
   category: string;
   tags: string[];
-  tech: string[];
   aesthetics: string[];
   effects: string[];
   typography: string[];
@@ -19,27 +18,237 @@ export interface SiteMetadata {
   thumbnail: string;
   images: string[];
   date: string;
+  socialLink?: string;
 }
 
 export const sites: SiteMetadata[] = [
   {
-    "name": "shadcn/ui",
-    "slug": "shadcn-ui",
-    "url": "https://ui.shadcn.com",
-    "description": "Beautifully designed components that you can copy and paste into your apps",
-    "category": "product design",
-    "tags": ["accessible", "components"],
-    "tech": ["radix-ui"],
-    "aesthetics": ["minimalism", "swiss"],
-    "effects": ["blur"],
-    "typography": ["sans-serif", "variable"],
-    "composition": ["grid", "cards", "whitespace"],
-    "colorScheme": ["light-mode", "dark-mode", "monochrome"],
-    "interaction": ["hover-effects", "micro-interactions"],
+    "name": "Raycast",
+    "slug": "raycast",
+    "url": "https://raycast.com",
+    "description": "A radically faster and better way to work on your Mac",
+    "category": "landing page",
+    "tags": [
+      "hardware",
+      "tools",
+      "mac"
+    ],
+    "aesthetics": [
+      "futuristic",
+      "dark"
+    ],
+    "effects": [
+      "gradients",
+      "glassmorphism",
+      "glow"
+    ],
+    "typography": [
+      "sans-serif",
+      "monospace"
+    ],
+    "composition": [
+      "bento",
+      "full-bleed"
+    ],
+    "colorScheme": [
+      "dark-mode",
+      "neon",
+      "high-contrast"
+    ],
+    "interaction": [
+      "scroll-animations",
+      "page-transitions",
+      "cursor-effects"
+    ],
+    "featured": true,
+    "thumbnail": "/images/aceternity.png",
+    "images": [
+      "/images/aceternity.png"
+    ],
+    "date": "2026-03-05",
+    "socialLink": "https://x.com/raycastapp"
+  },
+  {
+    "name": "Opal Camera",
+    "slug": "opal-camera",
+    "url": "https://opalcamera.com",
+    "description": "The first professional webcam for your Mac",
+    "category": "landing page",
+    "tags": [
+      "hardware",
+      "consumer",
+      "photography"
+    ],
+    "aesthetics": [
+      "industrial",
+      "premium",
+      "minimalism"
+    ],
+    "effects": [
+      "3d",
+      "parallax",
+      "video"
+    ],
+    "typography": [
+      "sans-serif",
+      "display"
+    ],
+    "composition": [
+      "full-bleed",
+      "centered",
+      "hero"
+    ],
+    "colorScheme": [
+      "monochrome",
+      "high-contrast",
+      "dark-mode"
+    ],
+    "interaction": [
+      "scroll-animations",
+      "video-playback",
+      "page-transitions"
+    ],
     "featured": true,
     "thumbnail": "/images/shadcn.png",
-    "images": ["/images/shadcn.png"],
-    "date": "2026-01-15"
+    "images": [
+      "/images/shadcn.png"
+    ],
+    "date": "2026-03-12",
+    "socialLink": "https://x.com/opalcamera"
+  },
+  {
+    "name": "Notion",
+    "slug": "notion",
+    "url": "https://notion.so",
+    "description": "Your connected workspace for wiki, docs & projects",
+    "category": "product design",
+    "tags": [
+      "saas",
+      "productivity",
+      "workspace"
+    ],
+    "aesthetics": [
+      "minimalism",
+      "editorial",
+      "clean"
+    ],
+    "effects": [],
+    "typography": [
+      "serif",
+      "sans-serif"
+    ],
+    "composition": [
+      "sidebar",
+      "whitespace",
+      "blocks"
+    ],
+    "colorScheme": [
+      "light-mode",
+      "dark-mode",
+      "muted"
+    ],
+    "interaction": [
+      "drag-and-drop",
+      "hover-effects"
+    ],
+    "featured": false,
+    "thumbnail": "/images/shadcn.png",
+    "images": [
+      "/images/shadcn.png"
+    ],
+    "date": "2026-02-15",
+    "socialLink": "https://x.com/NotionHQ"
+  },
+  {
+    "name": "Tailwind UI",
+    "slug": "tailwind-ui",
+    "url": "https://tailwindui.com",
+    "description": "Beautifully designed, fully responsive UI components",
+    "category": "product design",
+    "tags": [
+      "components",
+      "ui-kit",
+      "design-system"
+    ],
+    "aesthetics": [
+      "clean",
+      "accessible",
+      "modern"
+    ],
+    "effects": [
+      "shadows",
+      "blur"
+    ],
+    "typography": [
+      "sans-serif",
+      "inter"
+    ],
+    "composition": [
+      "grid",
+      "cards",
+      "whitespace"
+    ],
+    "colorScheme": [
+      "light-mode",
+      "dark-mode"
+    ],
+    "interaction": [
+      "hover-effects",
+      "transitions"
+    ],
+    "featured": false,
+    "thumbnail": "/images/aceternity.png",
+    "images": [
+      "/images/aceternity.png"
+    ],
+    "date": "2026-03-10",
+    "socialLink": "https://x.com/tailwindcss"
+  },
+  {
+    "name": "Cron",
+    "slug": "cron",
+    "url": "https://cron.com",
+    "description": "The next-generation calendar for professionals and teams",
+    "category": "product design",
+    "tags": [
+      "saas",
+      "productivity",
+      "calendar"
+    ],
+    "aesthetics": [
+      "minimalism",
+      "swiss",
+      "clean"
+    ],
+    "effects": [
+      "blur"
+    ],
+    "typography": [
+      "sans-serif",
+      "inter"
+    ],
+    "composition": [
+      "sidebar",
+      "grid",
+      "whitespace"
+    ],
+    "colorScheme": [
+      "light-mode",
+      "monochrome",
+      "accessible"
+    ],
+    "interaction": [
+      "micro-interactions",
+      "keyboard-shortcuts",
+      "drag-and-drop"
+    ],
+    "featured": true,
+    "thumbnail": "/images/shadcn.png",
+    "images": [
+      "/images/shadcn.png"
+    ],
+    "date": "2026-03-01",
+    "socialLink": "https://x.com/cron"
   },
   {
     "name": "Aceternity UI",
@@ -47,169 +256,46 @@ export const sites: SiteMetadata[] = [
     "url": "https://ui.aceternity.com",
     "description": "Animated React component library with stunning visual effects",
     "category": "product design",
-    "tags": ["animated", "components"],
-    "tech": ["framer-motion"],
-    "aesthetics": ["futuristic", "glassmorphism"],
-    "effects": ["gradients", "blur", "3d", "parallax"],
-    "typography": ["sans-serif", "display"],
-    "composition": ["grid", "bento", "full-bleed"],
-    "colorScheme": ["dark-mode", "vibrant", "neon"],
-    "interaction": ["scroll-animations", "hover-effects", "micro-interactions", "cursor-effects"],
+    "tags": [
+      "animated",
+      "components"
+    ],
+    "aesthetics": [
+      "futuristic",
+      "glassmorphism"
+    ],
+    "effects": [
+      "gradients",
+      "blur",
+      "3d",
+      "parallax"
+    ],
+    "typography": [
+      "sans-serif",
+      "display"
+    ],
+    "composition": [
+      "grid",
+      "bento",
+      "full-bleed"
+    ],
+    "colorScheme": [
+      "dark-mode",
+      "vibrant",
+      "neon"
+    ],
+    "interaction": [
+      "scroll-animations",
+      "hover-effects",
+      "micro-interactions",
+      "cursor-effects"
+    ],
     "featured": true,
     "thumbnail": "/images/aceternity.png",
-    "images": ["/images/aceternity.png"],
-    "date": "2026-01-01"
-  },
-  {
-    "name": "Stripe",
-    "slug": "stripe",
-    "url": "https://stripe.com",
-    "description": "Financial infrastructure for the internet with world-class design",
-    "category": "landing page",
-    "tags": ["fintech", "saas", "iconic"],
-    "tech": [],
-    "aesthetics": ["minimalism", "futuristic"],
-    "effects": ["gradients", "3d", "morph"],
-    "typography": ["sans-serif", "variable"],
-    "composition": ["full-bleed", "split-screen", "whitespace"],
-    "colorScheme": ["vibrant", "dark-mode"],
-    "interaction": ["scroll-animations", "hover-effects", "page-transitions", "micro-interactions"],
-    "featured": true,
-    "thumbnail": "/images/shadcn.png",
-    "images": ["/images/shadcn.png"],
-    "date": "2026-01-20"
-  },
-  {
-    "name": "Linear",
-    "slug": "linear",
-    "url": "https://linear.app",
-    "description": "The issue tracking tool you'll enjoy using",
-    "category": "product design",
-    "tags": ["saas", "productivity", "devtools"],
-    "tech": [],
-    "aesthetics": ["minimalism", "futuristic"],
-    "effects": ["blur", "gradients", "noise"],
-    "typography": ["sans-serif"],
-    "composition": ["grid", "whitespace", "cards"],
-    "colorScheme": ["dark-mode", "muted", "duotone"],
-    "interaction": ["micro-interactions", "hover-effects", "page-transitions"],
-    "featured": true,
-    "thumbnail": "/images/aceternity.png",
-    "images": ["/images/aceternity.png"],
-    "date": "2026-01-18"
-  },
-  {
-    "name": "Diagram",
-    "slug": "diagram",
-    "url": "https://diagram.com",
-    "description": "AI-powered design tools for the next generation of designers",
-    "category": "landing page",
-    "tags": ["ai", "design-tools", "3d"],
-    "tech": ["react", "threejs"],
-    "aesthetics": ["futuristic", "organic"],
-    "effects": ["3d", "morph", "gradients", "parallax"],
-    "typography": ["display", "oversized"],
-    "composition": ["full-bleed", "overlap", "asymmetric"],
-    "colorScheme": ["dark-mode", "vibrant", "neon"],
-    "interaction": ["scroll-animations", "cursor-effects", "loading-animations", "page-transitions"],
-    "featured": true,
-    "thumbnail": "/images/shadcn.png",
-    "images": ["/images/shadcn.png"],
-    "date": "2026-01-25"
-  },
-  {
-    "name": "Vercel",
-    "slug": "vercel",
-    "url": "https://vercel.com",
-    "description": "Develop. Preview. Ship. The platform for frontend developers",
-    "category": "landing page",
-    "tags": ["devtools", "hosting", "nextjs"],
-    "tech": [],
-    "aesthetics": ["minimalism", "swiss"],
-    "effects": ["gradients", "blur", "noise"],
-    "typography": ["sans-serif", "monospace"],
-    "composition": ["grid", "whitespace", "bento"],
-    "colorScheme": ["dark-mode", "monochrome", "high-contrast"],
-    "interaction": ["hover-effects", "page-transitions", "micro-interactions"],
-    "featured": false,
-    "thumbnail": "/images/aceternity.png",
-    "images": ["/images/aceternity.png"],
-    "date": "2026-01-10"
-  },
-  {
-    "name": "Cosmos",
-    "slug": "cosmos",
-    "url": "https://cosmos.so",
-    "description": "Visual bookmarking and mood boards for creative professionals",
-    "category": "product design",
-    "tags": ["creative", "bookmarks", "visual"],
-    "tech": [],
-    "aesthetics": ["minimalism", "editorial"],
-    "effects": ["blur", "grain"],
-    "typography": ["serif", "display"],
-    "composition": ["masonry", "cards", "whitespace"],
-    "colorScheme": ["light-mode", "muted", "monochrome"],
-    "interaction": ["hover-effects", "micro-interactions"],
-    "featured": false,
-    "thumbnail": "/images/shadcn.png",
-    "images": ["/images/shadcn.png"],
-    "date": "2026-02-01"
-  },
-  {
-    "name": "Basement Studio",
-    "slug": "basement-studio",
-    "url": "https://basement.studio",
-    "description": "Digital design studio pushing boundaries with bold visual experiments",
-    "category": "branding",
-    "tags": ["agency", "creative", "experimental"],
-    "tech": ["react", "threejs", "gsap"],
-    "aesthetics": ["brutalism", "futuristic"],
-    "effects": ["glitch", "noise", "3d", "grain", "dither"],
-    "typography": ["monospace", "oversized", "display"],
-    "composition": ["full-bleed", "asymmetric", "overlap"],
-    "colorScheme": ["dark-mode", "high-contrast", "monochrome"],
-    "interaction": ["cursor-effects", "scroll-animations", "page-transitions", "loading-animations"],
-    "featured": true,
-    "thumbnail": "/images/aceternity.png",
-    "images": ["/images/aceternity.png"],
-    "date": "2026-02-05"
-  },
-  {
-    "name": "Daylight Computer",
-    "slug": "daylight-computer",
-    "url": "https://daylightcomputer.com",
-    "description": "A new kind of computer designed for the human eye",
-    "category": "landing page",
-    "tags": ["hardware", "e-ink", "product"],
-    "tech": ["nextjs", "framer-motion"],
-    "aesthetics": ["retro", "organic", "skeuomorphism"],
-    "effects": ["dither", "halftone", "grain", "noise"],
-    "typography": ["serif", "variable"],
-    "composition": ["split-screen", "whitespace", "full-bleed"],
-    "colorScheme": ["earth-tones", "muted", "pastel"],
-    "interaction": ["scroll-animations", "hover-effects"],
-    "featured": false,
-    "thumbnail": "/images/shadcn.png",
-    "images": ["/images/shadcn.png"],
-    "date": "2026-02-08"
-  },
-  {
-    "name": "Rauno Freiberg",
-    "slug": "rauno-freiberg",
-    "url": "https://rauno.me",
-    "description": "Personal portfolio of a design engineer at Vercel",
-    "category": "branding",
-    "tags": ["portfolio", "personal", "design-engineer"],
-    "tech": [],
-    "aesthetics": ["minimalism", "editorial"],
-    "effects": ["blur", "noise"],
-    "typography": ["serif", "sans-serif"],
-    "composition": ["whitespace", "asymmetric"],
-    "colorScheme": ["light-mode", "monochrome", "muted"],
-    "interaction": ["micro-interactions", "hover-effects", "page-transitions"],
-    "featured": false,
-    "thumbnail": "/images/aceternity.png",
-    "images": ["/images/aceternity.png"],
-    "date": "2026-02-10"
+    "images": [
+      "/images/aceternity.png"
+    ],
+    "date": "2026-01-01",
+    "socialLink": "https://x.com/aceternityui"
   }
 ];

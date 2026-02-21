@@ -17,7 +17,6 @@ interface SiteMetadata {
   description: string;
   category: string;
   tags: string[];
-  tech: string[];
   aesthetics: string[];
   effects: string[];
   typography: string[];
@@ -28,6 +27,7 @@ interface SiteMetadata {
   thumbnail: string;
   images: string[];
   date: string;
+  socialLink?: string;
 }
 
 function generateIndex() {
@@ -63,7 +63,6 @@ export interface SiteMetadata {
   description: string;
   category: string;
   tags: string[];
-  tech: string[];
   aesthetics: string[];
   effects: string[];
   typography: string[];
@@ -74,6 +73,7 @@ export interface SiteMetadata {
   thumbnail: string;
   images: string[];
   date: string;
+  socialLink?: string;
 }
 
 export const sites: SiteMetadata[] = ${JSON.stringify(sites, null, 2)};

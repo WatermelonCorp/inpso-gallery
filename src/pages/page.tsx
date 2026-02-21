@@ -8,7 +8,7 @@ import { SiteGrid } from "@/components/site-grid";
 import { AdvancedFiltersSheet } from "@/components/advanced-filters-sheet";
 import { Container } from "@/components/layout/container";
 import { HorizontalLine } from "@/components/layout/line";
-import { Footer } from "@/components/layout/footer";
+
 
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -91,7 +91,7 @@ export function HomePage() {
 
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans relative">
+    <div className="bg-background text-foreground font-sans relative">
       {/* Decorative blurred orbs */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
@@ -100,7 +100,7 @@ export function HomePage() {
       </div>
 
       <div className="mx-auto relative z-10">
-        <header className="text-center md:text-left max-w-5xl mx-auto border-x py-10 px-4">
+        <header className="text-center md:text-left max-w-7xl mx-auto border-x py-10 px-4">
           <p className="text-muted-foreground text-lg max-w-2xl">
             A curated directory of the best design resources, UI libraries, and tools for modern web development.
           </p>
@@ -115,7 +115,7 @@ export function HomePage() {
             onOpenAdvancedFilters={() => setIsAdvancedOpen(true)}
           />
 
-          <main className="mt-8">
+          <main className="pt-4">
             <SiteGrid sites={filteredSites} isLoading={isMounting} />
           </main>
 
@@ -127,7 +127,7 @@ export function HomePage() {
             counts={counts}
           />
         </Container>
-        <Footer />
+
       </div>
     </div>
   );

@@ -5,11 +5,11 @@ import { GithubIcon, NewTwitterIcon } from "@hugeicons/core-free-icons"
 export function Footer() {
   return (
     <div className="border-t border-border/60 bg-background/80 backdrop-blur-xl">
-      <div className="border-x h-10 w-full max-w-5xl mx-auto border-border/60"></div>
+      <div className="border-x h-10 w-full max-w-7xl mx-auto border-border/60"></div>
       {/* Accent line above footer */}
       <HorizontalLine />
 
-      <div className="max-w-5xl mx-auto border-x border-border/60">
+      <div className="max-w-7xl mx-auto border-x border-border/60">
         {/* Main footer row */}
         <div className="py-8 flex flex-col sm:flex-row items-center justify-between gap-6 px-4">
           {/* Brand */}

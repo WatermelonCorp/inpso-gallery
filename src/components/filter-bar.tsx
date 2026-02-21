@@ -64,8 +64,8 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
   ].length + (filters.featured ? 1 : 0);
 
   return (
-    <div className="w-full space-y-6 sticky top-16 z-40 bg-background backdrop-blur-md pt-6 pb-2">
-      <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
+    <div className="w-full space-y-6 sticky top-16 z-40 bg-background/95 backdrop-blur-md py-4">
+      <div className="flex flex-wrap gap-3 items-center justify-between">
 
         {/* Categories */}
         <Tabs value={filters.category} onValueChange={handleCategoryChange} className="w-full md:w-auto overflow-hidden">
@@ -74,7 +74,7 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
               <TabsTrigger
                 key={cat}
                 value={cat}
-                className="capitalize px-3 py-1.5 shrink-0 whitespace-nowrap"
+                className="capitalize px-2"
               >
                 {cat}
               </TabsTrigger>
@@ -83,7 +83,7 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
         </Tabs>
 
         {/* Filter Trigger */}
-        <div className="flex items-center gap-2 w-full md:w-auto justify-end">
+        <div className="flex items-center gap-2 ml-auto">
           {(activeFilterCount > 0 || filters.search) && (
             <Button variant="ghost" size="sm" onClick={clearFilters} className="text-muted-foreground hover:text-foreground">
               <HugeiconsIcon icon={X} className="h-4 w-4 mr-2" />
@@ -105,12 +105,12 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
       </div>
 
       {/* Quick Design Tags */}
-      <div className="flex gap-2 overflow-x-auto pb-4 scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto md:flex-wrap pb-4 scrollbar-hide">
         {DESIGN_QUICK_TAGS.map(tag => (
           <Badge
             key={tag}
             variant={filters.aesthetics.includes(tag) ? "default" : "outline"}
-            className="cursor-pointer transition-all duration-200 whitespace-nowrap rounded-md text-sm h-7 active:scale-95"
+            className="cursor-pointer transition-all w-auto capitalize duration-200 whitespace-nowrap rounded-md text-sm h-7 active:scale-95"
             onClick={() => toggleAesthetic(tag)}
           >
             {tag}
