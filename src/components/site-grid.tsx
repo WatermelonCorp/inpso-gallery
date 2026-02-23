@@ -1,7 +1,7 @@
 
 import type { SiteMetadata } from "@/content/sites";
 import { SiteCardWithModal } from "@/components/site-card";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence } from "motion/react";
 
 interface SiteGridProps {
   sites: SiteMetadata[];

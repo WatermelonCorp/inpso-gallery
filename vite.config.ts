@@ -21,4 +21,16 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    chunkSizeWarningLimit: 800,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-react': ['react', 'react-dom', 'react-router-dom'],
+          'vendor-motion': ['motion'],
+          'vendor-icons': ['@hugeicons/react', '@hugeicons/core-free-icons', 'lucide-react']
+        }
+      }
+    }
+  }
 })

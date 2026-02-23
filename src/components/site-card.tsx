@@ -2,7 +2,7 @@
 
 import type { SiteMetadata } from "@/content/sites";
 import { useRef, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { HugeiconsIcon } from "@hugeicons/react";
 import { LinkSquare02Icon, ArrowUpRight01Icon, ArrowDown01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
 import { PrimaryButton } from "./primary-button";
@@ -40,8 +40,9 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
   const galleryImages = buildGallery();
   const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollEl, setScrollEl] = useState<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [showScrollHint, setShowScrollHint] = useState(true);
+  const [showScrollHint, setShowScrollHint] = useState(false);
 
   // Lock body scroll when desktop modal is open
   useEffect(() => {
@@ -49,7 +50,6 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
       if (isOpen) {
         document.body.style.overflow = "hidden";
         setActiveIndex(0);
-        setShowScrollHint(true);
       } else {
         document.body.style.overflow = "";
       }
@@ -69,18 +69,40 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
   }, []);
 
   useEffect(() => {
-    const el = scrollRef.current;
+    const el = scrollEl;
     if (!el) return;
-    const onScroll = () => {
+    const updateFromScrollPosition = () => {
       const scrollTop = el.scrollTop;
-      const imgHeight = el.scrollHeight / galleryImages.length;
+      const scrollHeight = el.scrollHeight;
+      const clientHeight = el.clientHeight;
+      const bottomHideMargin = 360;
+
+      const imgHeight = scrollHeight / galleryImages.length;
       const idx = Math.round(scrollTop / imgHeight);
-      setActiveIndex(Math.min(idx, galleryImages.length - 1));
-      if (scrollTop > 20) setShowScrollHint(false);
+      const clampedIdx = Math.min(Math.max(idx, 0), galleryImages.length - 1);
+      setActiveIndex(clampedIdx);
+
+      // Show hint only if there is still downward scrollable content.
+      const canScrollDownMore = scrollTop + clientHeight < scrollHeight - bottomHideMargin;
+      setShowScrollHint(galleryImages.length > 1 && canScrollDownMore);
     };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, [galleryImages.length, isOpen]);
+
+    el.addEventListener("scroll", updateFromScrollPosition, { passive: true });
+
+    const resizeObserver = new ResizeObserver(() => {
+      updateFromScrollPosition();
+    });
+    resizeObserver.observe(el);
+
+    // Run after layout/image sizing settles.
+    const rafId = requestAnimationFrame(updateFromScrollPosition);
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      resizeObserver.disconnect();
+      el.removeEventListener("scroll", updateFromScrollPosition);
+    };
+  }, [galleryImages.length, scrollEl]);
 
   const scrollToImage = (index: number) => {
     const el = scrollRef.current;
@@ -94,30 +116,35 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
   /* ── Shared gallery content ── */
   const galleryContent = (
     <div
-      ref={scrollRef}
+      ref={(node) => {
+        scrollRef.current = node;
+        setScrollEl(node);
+      }}
       className="relative flex-1 min-h-0 overflow-y-auto scroll-smooth flex flex-col gap-2 p-1"
       style={{ scrollSnapType: "y mandatory" }}
     >
-      {galleryImages.map((img, i) => (
-        <div
-          key={i}
-          className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
-          style={{ scrollSnapAlign: "start" }}
-        >
-          <img
-            src={img}
-            alt={`${site.name} screenshot ${i}`}
-            className="w-full object-cover"
-            loading="lazy"
-          />
-          {/* Image number label */}
-          <div className="absolute top-3 left-3">
-            <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full">
-              {i + 1} / {galleryImages.length}
-            </span>
+      {galleryImages.map((img, i) => {
+        return (
+          <div
+            key={i}
+            className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
+            style={{ scrollSnapAlign: "start" }}
+          >
+            <img
+              src={img}
+              alt={`${site.name} screenshot ${i}`}
+              className="w-full object-cover"
+              loading="lazy"
+            />
+            {/* Image number label */}
+            <div className="absolute top-3 left-3">
+              <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full">
+                {i + 1} / {galleryImages.length}
+              </span>
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
 
       {/* Dot nav */}
       <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-1.5 z-20">
