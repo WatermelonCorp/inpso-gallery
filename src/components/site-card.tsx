@@ -2,12 +2,10 @@
 
 import type { SiteMetadata } from "@/content/sites";
 import { useRef, useState, useEffect } from "react";
-import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { LinkSquare02Icon, Cancel01Icon, ArrowUpRight01Icon, ArrowDown01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
+import { LinkSquare02Icon, ArrowUpRight01Icon, ArrowDown01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
 import { PrimaryButton } from "./primary-button";
-import { Link } from "react-router-dom";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
   Drawer,
@@ -15,6 +13,13 @@ import {
   DrawerHeader,
   DrawerTitle,
 } from "@/components/ui/drawer";
+import {
+  MorphingDialog,
+  MorphingDialogTrigger,
+  MorphingDialogContainer,
+  MorphingDialogContent,
+  MorphingDialogClose,
+} from "./ui/morphing-dialog";
 
 interface SiteCardWithModalProps {
   site: SiteMetadata;
@@ -84,7 +89,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
     el.scrollTo({ top: imgHeight * index, behavior: "smooth" });
   };
 
-  const cardId = `card-${site.url.replace(/[^a-zA-Z0-9]/g, "-")}`;
+
 
   /* ── Shared gallery content ── */
   const galleryContent = (
@@ -145,7 +150,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
   /* ── Shared bottom bar ── */
   const bottomBar = (
-    <div className="shrink-0 border-t border-border/60 bg-card/95 backdrop-blur-sm px-5 py-3.5 flex items-center justify-between gap-4">
+    <div className="shrink-0 backdrop-blur-sm px-5 py-3.5 flex items-center justify-between gap-4">
       <div className="flex items-center gap-3 min-w-0">
         {/* Favicon */}
         <div className="flex items-center justify-center h-9 w-9 rounded-xl bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
@@ -187,153 +192,140 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
     </div>
   );
 
+  const triggerContent = (
+    <>
+      <div className="overflow-hidden rounded-2xl border border-border/40 shadow-sm"
+      >
+        {/* Shimmer top border */}
+        <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
+
+        {/* Thumbnail — fills entire card */}
+        <div className="relative aspect-4/3 md:aspect-16/10 overflow-hidden">
+          <img
+            src={site.thumbnail}
+            alt={site.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+          {/* Overlay gradient on hover */}
+          <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
+      </div>
+
+      {/* Name label */}
+      <div className="flex items-center justify-between px-2 pt-2">
+        <h3 className="font-medium text-sm text-card-foreground leading-tight truncate">
+          {site.name}
+        </h3>
+        {site.socialLink ? (
+          <a
+            href={site.socialLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <HugeiconsIcon icon={NewTwitterIcon} className="h-3.5 w-3.5" />
+          </a>
+        ) : (
+          <div
+            className="text-muted-foreground hover:text-foreground transition-colors inline-block cursor-pointer"
+            onClick={(e) => {
+              e.stopPropagation();
+              window.open(`/sites/${site.slug}`, "_self");
+            }}
+          >
+            <HugeiconsIcon icon={ArrowUpRight01Icon} className="h-3.5 w-3.5" />
+          </div>
+        )}
+      </div>
+    </>
+  );
+
   return (
     <>
-      {/* ── Card Trigger ── */}
-      <motion.div
-        layoutId={`card-${cardId}`}
-        onClick={() => setIsOpen(true)}
-        className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2"
-        whileHover={{ y: -2 }}
-        transition={{ duration: 0.2 }}
-      >
-        <div className="overflow-hidden rounded-2xl border border-border/40 shadow-sm">
-          {/* Shimmer top border */}
-          <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-primary/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10" />
-
-          {/* Thumbnail — fills entire card */}
-          <div className="relative aspect-4/3 md:aspect-16/10 overflow-hidden">
-            <img
-              src={site.thumbnail}
-              alt={site.name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-            />
-            {/* Overlay gradient on hover */}
-            <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-          </div>
-        </div>
-
-        {/* Name label */}
-        <div className="flex items-center justify-between px-2 pt-2">
-          <h3 className="font-medium text-sm text-card-foreground leading-tight truncate">
-            {site.name}
-          </h3>
-          {site.socialLink ? (
-            <a
-              href={site.socialLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <HugeiconsIcon icon={NewTwitterIcon} className="h-3.5 w-3.5" />
-            </a>
-          ) : (
-            <Link
-              to={`/sites/${site.slug}`}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <HugeiconsIcon icon={ArrowUpRight01Icon} className="h-3.5 w-3.5" />
-            </Link>
-          )}
-        </div>
-      </motion.div>
-
-      {/* ── Mobile: Bottom Drawer ── */}
       {isMobile ? (
-        <Drawer open={isOpen} onOpenChange={setIsOpen}>
-          <DrawerContent className="max-h-[85vh] flex flex-col">
-            <DrawerHeader className="pb-2">
-              <DrawerTitle className="flex items-center gap-2">
-                <div className="flex items-center justify-center h-7 w-7 rounded-lg bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
-                  <img
-                    src={`https://www.google.com/s2/favicons?domain=${site.url}&sz=32`}
-                    alt=""
-                    className="h-4 w-4 object-contain"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).style.display = "none";
-                    }}
-                  />
-                </div>
-                {site.name}
-              </DrawerTitle>
-            </DrawerHeader>
+        <>
+          {/* ── Mobile: Bottom Drawer Trigger ── */}
+          <motion.div
+            onClick={() => setIsOpen(true)}
+            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left"
+            whileHover={{ y: -2 }}
+            transition={{ duration: 0.2 }}
+          >
+            {triggerContent}
+          </motion.div>
 
-            {/* Scrollable gallery */}
-            <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-2 px-4 pb-2">
-              {galleryImages.map((img, i) => (
-                <div
-                  key={i}
-                  className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
-                >
-                  <img
-                    src={img}
-                    alt={`${site.name} screenshot ${i}`}
-                    className="w-full object-cover"
-                    loading="lazy"
-                  />
-                  <div className="absolute top-2 left-2">
-                    <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
-                      {i + 1} / {galleryImages.length}
-                    </span>
+          <Drawer open={isOpen} onOpenChange={setIsOpen}>
+            <DrawerContent className="max-h-[85vh] flex flex-col w-full sm:max-w-[90vw]">
+              <DrawerHeader className="pb-2">
+                <DrawerTitle className="flex items-center gap-2">
+                  <div className="flex items-center justify-center h-7 w-7 rounded-lg bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
+                    <img
+                      src={`https://www.google.com/s2/favicons?domain=${site.url}&sz=32`}
+                      alt=""
+                      className="h-4 w-4 object-contain"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = "none";
+                      }}
+                    />
                   </div>
-                </div>
-              ))}
-            </div>
+                  {site.name}
+                </DrawerTitle>
+              </DrawerHeader>
 
-            {/* Bottom action */}
-            {bottomBar}
-          </DrawerContent>
-        </Drawer>
-      ) : (
-        /* ── Desktop: Portal Modal ── */
-        createPortal(
-          <AnimatePresence>
-            {isOpen && (
-              <>
-                {/* Backdrop */}
-                <motion.div
-                  key="backdrop"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.25 }}
-                  className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm"
-                  onClick={() => setIsOpen(false)}
-                />
-
-                {/* Morphing modal card */}
-                <div className="fixed inset-0 z-110 flex items-center justify-center pointer-events-none p-4">
-                  <motion.div
-                    layoutId={`card-${cardId}`}
-                    className="relative w-[90vw] max-w-6xl max-h-[88vh] flex flex-col bg-muted backdrop-blur-md border border-border/40 overflow-hidden shadow-2xl p-2 pointer-events-auto"
-                    transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+              {/* Scrollable gallery */}
+              <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-2 px-4 pb-2">
+                {galleryImages.map((img, i) => (
+                  <div
+                    key={i}
+                    className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
                   >
-                    {/* Close button */}
-                    <motion.button
-                      initial={{ opacity: 0, scale: 0.8 }}
-                      animate={{ opacity: 1, scale: 1, transition: { delay: 0.2, duration: 0.15 } }}
-                      exit={{ opacity: 0, scale: 0.8, transition: { duration: 0.1 } }}
-                      onClick={() => setIsOpen(false)}
-                      className="absolute right-2 top-2 h-fit w-fit rounded-lg bg-background/90 backdrop-blur-xl border border-border/40 p-1.5 shadow-lg z-50"
-                      aria-label="Close"
-                    >
-                      <HugeiconsIcon icon={Cancel01Icon} className="h-4 w-4 text-muted-foreground" />
-                    </motion.button>
-
-                    {/* Inner wrapper */}
-                    <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
-                      {galleryContent}
-                      {bottomBar}
+                    <img
+                      src={img}
+                      alt={`${site.name} screenshot ${i}`}
+                      className="w-full object-cover"
+                      loading="lazy"
+                    />
+                    <div className="absolute top-2 left-2">
+                      <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                        {i + 1} / {galleryImages.length}
+                      </span>
                     </div>
-                  </motion.div>
-                </div>
-              </>
-            )}
-          </AnimatePresence>,
-          document.body
-        )
+                  </div>
+                ))}
+              </div>
+
+              {/* Bottom action */}
+              {bottomBar}
+            </DrawerContent>
+          </Drawer>
+        </>
+      ) : (
+        /* ── Desktop: Morphing Dialog ── */
+        <MorphingDialog
+          transition={{
+            type: "spring",
+            bounce: 0,
+            duration: 0.3,
+          }}
+        >
+          <MorphingDialogTrigger
+            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2"
+          >
+            {triggerContent}
+          </MorphingDialogTrigger>
+
+          <MorphingDialogContainer>
+            <MorphingDialogContent className="relative w-[90vw] max-w-none h-[88vh] flex flex-col bg-muted/90 backdrop-blur-3xl border border-border/40 overflow-hidden shadow-2xl p-2 rounded-none pointer-events-auto">
+              <MorphingDialogClose className="absolute right-2 top-2 h-fit w-fit rounded-lg bg-background/50 backdrop-blur-xl border border-border/40 p-1.5 shadow-lg z-50 text-muted-foreground hover:text-foreground transition-colors cursor-pointer" />
+
+              <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
+                {galleryContent}
+                {bottomBar}
+              </div>
+            </MorphingDialogContent>
+          </MorphingDialogContainer>
+        </MorphingDialog>
       )}
     </>
   );
