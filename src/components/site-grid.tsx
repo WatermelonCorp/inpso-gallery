@@ -22,7 +22,7 @@ export function SiteGrid({ sites, isLoading = false }: SiteGridProps) {
             </div>
 
             <div className="flex items-center justify-between px-2 pt-2">
-              <div className="h-4 w-1/3 bg-muted/60 animate-pulse rounded col-span-2" />
+              <div className="h-4 w-1/3 bg-muted/60 animate-pulse rounded" />
               <div className="h-3.5 w-3.5 bg-muted/60 animate-pulse rounded" />
             </div>
           </div>
