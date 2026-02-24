@@ -4,7 +4,7 @@ import type { SiteMetadata } from "@/content/sites";
 import { useRef, useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { HugeiconsIcon } from "@hugeicons/react";
-import { LinkSquare02Icon, ArrowUpRight01Icon, ArrowDown01Icon, NewTwitterIcon } from "@hugeicons/core-free-icons";
+import { LinkSquare02Icon, ArrowUpRight01Icon, ArrowDown01Icon } from "@hugeicons/core-free-icons";
 import { PrimaryButton } from "./primary-button";
 import { useIsMobile } from "@/hooks/use-mobile";
 import {
@@ -39,6 +39,11 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
   };
 
   const galleryImages = buildGallery();
+  const galleryItemClass =
+    "relative w-full shrink-0 aspect-16/10 rounded-xl overflow-hidden border border-border/40 bg-muted/40";
+  const galleryBadgeWrapClass = "absolute top-3 left-3";
+  const galleryBadgeClass =
+    "inline-flex items-center justify-center h-7 min-w-[74px] px-2.5 text-[10px] font-medium text-white/85 bg-black/40 backdrop-blur-sm rounded-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollEl, setScrollEl] = useState<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -120,25 +125,24 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
         scrollRef.current = node;
         setScrollEl(node);
       }}
-      className="relative flex-1 min-h-0 overflow-y-auto scroll-smooth flex flex-col gap-2 p-1"
-      style={{ scrollSnapType: "y mandatory" }}
+      className="relative flex-1 min-h-0 overflow-y-auto scroll-smooth flex flex-col gap-2"
     >
       {galleryImages.map((img, i) => {
         return (
           <div
             key={i}
-            className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
+            className={galleryItemClass}
             style={{ scrollSnapAlign: "start" }}
           >
             <img
               src={img}
               alt={`${site.name} screenshot ${i}`}
-              className="w-full object-cover"
+              className="w-full h-full object-cover"
               loading="lazy"
             />
             {/* Image number label */}
-            <div className="absolute top-3 left-3">
-              <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full">
+            <div className={galleryBadgeWrapClass}>
+              <span className={galleryBadgeClass}>
                 {i + 1} / {galleryImages.length}
               </span>
             </div>
@@ -177,10 +181,10 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
   /* ── Shared bottom bar ── */
   const bottomBar = (
-    <div className="shrink-0 backdrop-blur-sm px-5 py-3.5 flex items-center justify-between gap-4">
+    <div className="shrink-0 backdrop-blur-sm pt-2 flex items-center justify-between gap-4">
       <div className="flex items-center gap-3 min-w-0">
         {/* Favicon */}
-        <div className="flex items-center justify-center h-9 w-9 rounded-xl bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
+        <div className="flex items-center justify-center pointer-events-none h-9 w-9 rounded-xl bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
           <img
             src={`https://www.google.com/s2/favicons?domain=${site.url}&sz=32`}
             alt=""
@@ -195,27 +199,15 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
         </div>
       </div>
 
-      <div className="flex items-center gap-2 shrink-0">
-        {site.socialLink && (
-          <a
-            href={site.socialLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center h-9 w-9 rounded-xl border border-border/40 hover:bg-muted text-muted-foreground hover:text-primary transition-all"
-          >
-            <HugeiconsIcon icon={NewTwitterIcon} className="h-4 w-4" />
-          </a>
-        )}
-        <PrimaryButton
-          as="a"
-          href={site.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          iconLeft={<HugeiconsIcon icon={LinkSquare02Icon} className="h-3 w-3" />}
-        >
-          Open
-        </PrimaryButton>
-      </div>
+      <PrimaryButton
+        as="a"
+        href={site.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        iconLeft={<HugeiconsIcon icon={LinkSquare02Icon} className="h-3 w-3" />}
+      >
+        Open
+      </PrimaryButton>
     </div>
   );
 
@@ -243,27 +235,14 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
         <h3 className="font-medium text-sm text-card-foreground leading-tight truncate">
           {site.name}
         </h3>
-        {site.socialLink ? (
-          <a
-            href={site.socialLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <HugeiconsIcon icon={NewTwitterIcon} className="h-3.5 w-3.5" />
-          </a>
-        ) : (
-          <div
-            className="text-muted-foreground hover:text-foreground transition-colors inline-block cursor-pointer"
-            onClick={(e) => {
-              e.stopPropagation();
-              window.open(`/sites/${site.slug}`, "_self");
-            }}
-          >
-            <HugeiconsIcon icon={ArrowUpRight01Icon} className="h-3.5 w-3.5" />
-          </div>
-        )}
+        <a
+          className="text-muted-foreground hover:text-foreground transition-colors inline-block cursor-pointer"
+          href={site.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <HugeiconsIcon icon={ArrowUpRight01Icon} className="h-3.5 w-3.5" />
+        </a>
       </div>
     </>
   );
@@ -301,20 +280,20 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
               </DrawerHeader>
 
               {/* Scrollable gallery */}
-              <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-2 px-4 pb-2">
+              <div className="flex-1 min-h-0 overflow-y-auto flex flex-col gap-2 p-4">
                 {galleryImages.map((img, i) => (
                   <div
                     key={i}
-                    className="relative w-full shrink-0 rounded-xl overflow-hidden border border-border/40"
+                    className={galleryItemClass}
                   >
                     <img
                       src={img}
                       alt={`${site.name} screenshot ${i}`}
-                      className="w-full object-cover"
+                      className="w-full h-full object-cover"
                       loading="lazy"
                     />
-                    <div className="absolute top-2 left-2">
-                      <span className="text-[10px] font-medium text-white/80 bg-black/40 backdrop-blur-sm px-2 py-0.5 rounded-full">
+                    <div className={galleryBadgeWrapClass}>
+                      <span className={galleryBadgeClass}>
                         {i + 1} / {galleryImages.length}
                       </span>
                     </div>
@@ -343,8 +322,8 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
           </MorphingDialogTrigger>
 
           <MorphingDialogContainer>
-            <MorphingDialogContent className="relative w-[90vw] max-w-none h-[88vh] flex flex-col bg-muted/90 backdrop-blur-3xl border border-border/40 overflow-hidden shadow-2xl p-2 rounded-none pointer-events-auto">
-              <MorphingDialogClose className="absolute right-2 top-2 h-fit w-fit rounded-lg bg-background/50 backdrop-blur-xl border border-border/40 p-1.5 shadow-lg z-50 text-muted-foreground hover:text-foreground transition-colors cursor-pointer" />
+            <MorphingDialogContent className="relative w-[90vw] max-w-none h-[88vh] flex flex-col bg-muted/90 backdrop-blur-3xl border border-border/40 overflow-hidden p-2 rounded-none pointer-events-auto shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)]">
+              <MorphingDialogClose className="absolute right-2 top-2 h-fit w-fit bg-background/50 backdrop-blur-xl border border-border/40 p-1.5 shadow-lg z-50 text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus:outline-none" />
 
               <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
                 {galleryContent}

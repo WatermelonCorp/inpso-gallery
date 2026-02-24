@@ -18,7 +18,7 @@ export const Container = ({
       )}
     >
       {/* Content layer */}
-      <div className="border border-border/50 p-2 md:p-4 lg:p-10 rounded-2xl bg-background relative z-10">
+      <div className="border border-border/50 p-2 md:p-4 lg:p-10 rounded-2xl bg-background relative z-10 h-full min-h-0 flex flex-col">
         {children}
       </div>
     </div>

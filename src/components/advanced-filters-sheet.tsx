@@ -18,8 +18,8 @@ import {
   DrawerClose,
 } from "@/components/ui/drawer";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { PrimaryButton } from "@/components/primary-button";
 
 import type { FilterState } from "@/lib/filter-sites";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -103,7 +103,7 @@ export function AdvancedFiltersSheet({
         <h4 className="mb-3 text-sm font-medium text-foreground uppercase tracking-wider">Sort By</h4>
         <div className="flex gap-2">
           {["newest", "featured", "alphabetical"].map((opt) => (
-            <Button
+            <PrimaryButton
               key={opt}
               variant={filters.sort === opt ? "default" : "outline"}
               size="sm"
@@ -111,7 +111,7 @@ export function AdvancedFiltersSheet({
               className="capitalize active:scale-95 transition-transform"
             >
               {opt}
-            </Button>
+            </PrimaryButton>
           ))}
         </div>
       </div>
@@ -137,12 +137,10 @@ export function AdvancedFiltersSheet({
           </SheetHeader>
           <FilterContent />
           <SheetFooter className="px-6 py-6 border-t mt-auto bg-muted/20">
-            <Button variant="outline" className="w-full" onClick={resetFilters}>
+            <PrimaryButton variant="outline" className="w-full" onClick={resetFilters}>
               Reset all
-            </Button>
-            <SheetClose render={<Button className="w-full" />}>
-              Show Results
-            </SheetClose>
+            </PrimaryButton>
+            <SheetClose render={<PrimaryButton className="w-full">Show Results</PrimaryButton>} />
           </SheetFooter>
         </SheetContent>
       </Sheet>
@@ -158,12 +156,12 @@ export function AdvancedFiltersSheet({
         </DrawerHeader>
         <FilterContent />
         <DrawerFooter className="px-6 py-6 border-t bg-muted/20">
-          <Button className="w-full" onClick={() => onOpenChange(false)}>Show Results</Button>
-          <Button variant="outline" className="w-full" onClick={resetFilters}>
+          <PrimaryButton className="w-full" onClick={() => onOpenChange(false)}>Show Results</PrimaryButton>
+          <PrimaryButton variant="outline" className="w-full" onClick={resetFilters}>
             Reset all
-          </Button>
+          </PrimaryButton>
           <DrawerClose asChild>
-            <Button variant="ghost" className="w-full">Cancel</Button>
+            <PrimaryButton variant="ghost" className="w-full">Cancel</PrimaryButton>
           </DrawerClose>
         </DrawerFooter>
       </DrawerContent>

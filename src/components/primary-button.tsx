@@ -110,25 +110,49 @@ export function PrimaryButton(props: PrimaryButtonProps) {
   );
 
   if (props.as === "a") {
-    const { as: _as, external, href, iconLeft: _l, iconRight: _r, loading: _ld, size: _s, variant: _v, ...anchorProps } = props;
+    const {
+      as: _as,
+      external,
+      href,
+      className: _cn,
+      children: _children,
+      iconLeft: _l,
+      iconRight: _r,
+      loading: _ld,
+      disabled: _dis,
+      size: _s,
+      variant: _v,
+      ...anchorProps
+    } = props;
     return (
       <a
+        {...anchorProps}
+        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
         href={href}
         className={classes}
-        {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        {...anchorProps}
       >
         {content}
       </a>
     );
   }
 
-  const { as: _as, iconLeft: _l, iconRight: _r, loading: _ld, size: _s, variant: _v, ...buttonProps } = props;
+  const {
+    as: _as,
+    className: _cn,
+    children: _children,
+    iconLeft: _l,
+    iconRight: _r,
+    loading: _ld,
+    disabled: _dis,
+    size: _s,
+    variant: _v,
+    ...buttonProps
+  } = props;
   return (
     <button
+      {...buttonProps}
       className={classes}
       disabled={disabled || loading}
-      {...buttonProps}
     >
       {content}
     </button>

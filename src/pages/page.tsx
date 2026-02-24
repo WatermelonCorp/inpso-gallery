@@ -91,7 +91,7 @@ export function HomePage() {
 
 
   return (
-    <div className="bg-background text-foreground font-sans relative">
+    <div className="min-h-screen bg-background text-foreground font-sans relative">
       {/* Decorative blurred orbs */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
@@ -100,33 +100,58 @@ export function HomePage() {
       </div>
 
       <div className="mx-auto relative z-10">
-        <header className="text-center md:text-left max-w-7xl mx-auto border-x py-10 px-4">
+        <header className="text-center md:text-left max-w-7xl mx-auto border-x py-10 px-4 relative z-30 bg-background">
           <p className="text-muted-foreground text-lg max-w-2xl">
             A curated directory of the best design resources, UI libraries, and tools for modern web development.
           </p>
         </header>
-        <HorizontalLine />
+        <div className="relative z-30">
+          <HorizontalLine />
+        </div>
 
-        <Container>
+        <div className="relative w-full max-w-7xl mx-auto">
+          {/* Layer 1: Visual Sticky Container Background */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="sticky top-16 h-[calc(100vh-4rem)] w-full">
+              <Container className="w-full h-full">
+                <div className="hidden" />
+              </Container>
+            </div>
+          </div>
 
-          <FilterBar
-            filters={filters}
-            setFilters={setFilters}
-            onOpenAdvancedFilters={() => setIsAdvancedOpen(true)}
-          />
+          {/* Layer 2: Scrolling Content */}
+          <div className="relative z-10 w-full pointer-events-none">
+            <div className="pointer-events-auto">
 
-          <main className="pt-4">
-            <SiteGrid sites={filteredSites} isLoading={isMounting} />
-          </main>
+              {/* Opaque Sticky Mask to hide sliding cards and hold FilterBar */}
+              <div className="sticky top-16 z-20 w-full">
+                <div className="pt-2 px-2 border-t border-x border-b-0 border-border/40 bg-black/5 backdrop-blur-xl shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] dark:bg-white/5">
+                  <div className="border border-border/50 border-b-0 py-2 px-10 pb-0 rounded-t-2xl bg-background relative z-10 w-full flex flex-col">
+                    <FilterBar
+                      filters={filters}
+                      setFilters={setFilters}
+                      onOpenAdvancedFilters={() => setIsAdvancedOpen(true)}
+                      className="static bg-background/0 backdrop-blur-none w-full"
+                    />
+                  </div>
+                </div>
+              </div>
 
-          <AdvancedFiltersSheet
-            open={isAdvancedOpen}
-            onOpenChange={setIsAdvancedOpen}
-            filters={filters}
-            setFilters={setFilters}
-            counts={counts}
-          />
-        </Container>
+              {/* Grid Content */}
+              <main className="w-full px-[calc(0.5rem+1px+0.5rem)] md:px-[calc(0.5rem+1px+1rem)] lg:px-[calc(0.5rem+1px+2.5rem)] pt-4 pb-12 relative z-10 border-x border-transparent">
+                <SiteGrid sites={filteredSites} isLoading={isMounting} />
+              </main>
+
+              <AdvancedFiltersSheet
+                open={isAdvancedOpen}
+                onOpenChange={setIsAdvancedOpen}
+                filters={filters}
+                setFilters={setFilters}
+                counts={counts}
+              />
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>

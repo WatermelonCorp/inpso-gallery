@@ -1,5 +1,4 @@
 
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import type { FilterState } from "@/lib/filter-sites";
@@ -12,6 +11,7 @@ interface FilterBarProps {
   filters: FilterState;
   setFilters: React.Dispatch<React.SetStateAction<FilterState>>;
   onOpenAdvancedFilters: () => void;
+  className?: string;
 }
 
 const CATEGORIES = ["all", "landing page", "product design", "mobile app", "dashboards", "branding", "motion design"];
@@ -21,7 +21,9 @@ const DESIGN_QUICK_TAGS = [
   "futuristic", "organic", "editorial", "swiss", "skeuomorphism",
 ];
 
-export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: FilterBarProps) {
+import { cn } from "@/lib/utils";
+
+export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, className }: FilterBarProps) {
 
 
   const handleCategoryChange = (value: string) => {
@@ -64,7 +66,7 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
   ].length + (filters.featured ? 1 : 0);
 
   return (
-    <div className="w-full space-y-6 sticky top-16 z-40 bg-background/95 backdrop-blur-md py-4">
+    <div className={cn("w-full space-y-6 bg-background/95 backdrop-blur-md py-4 shrink-0", className || "sticky top-0 z-30")}>
       <div className="flex flex-wrap gap-3 items-center justify-between">
 
         {/* Categories */}
@@ -85,17 +87,16 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters }: Filter
         {/* Filter Trigger */}
         <div className="flex items-center gap-2 ml-auto">
           {(activeFilterCount > 0 || filters.search) && (
-            <Button variant="ghost" size="sm" onClick={clearFilters} className="text-muted-foreground hover:text-foreground">
-              <HugeiconsIcon icon={X} className="h-4 w-4 mr-2" />
+            <PrimaryButton variant="ghost" onClick={clearFilters} className="text-muted-foreground hover:text-foreground" iconLeft={<HugeiconsIcon icon={X} className="h-4 w-4 mr-2" />}>
               Clear
-            </Button>
+            </PrimaryButton>
           )}
 
-          <PrimaryButton variant={activeFilterCount > 0 ? "outline" : "default"} onClick={onOpenAdvancedFilters} iconLeft={<HugeiconsIcon icon={SlidersHorizontal} className="h-4 w-4" />}>
-            <motion.span layout className="flex items-center gap-2">
+          <PrimaryButton onClick={onOpenAdvancedFilters} iconLeft={<HugeiconsIcon icon={SlidersHorizontal} className="h-4 w-4" />}>
+            <motion.span className="flex items-center gap-2">
               Filters
               {activeFilterCount > 0 && (
-                <Badge variant="default" className="size-7.5 p-0 flex items-center justify-center rounded-md text-[10px] -mr-3.5">
+                <Badge className="size-7.5 bg-white text-primary p-0 flex items-center justify-center rounded-md text-sm -mr-3.5">
                   {activeFilterCount}
                 </Badge>
               )}
