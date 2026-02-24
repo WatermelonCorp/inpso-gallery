@@ -43,7 +43,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
     "relative w-full shrink-0 aspect-16/10 rounded-xl overflow-hidden border border-border/40 bg-muted/40";
   const galleryBadgeWrapClass = "absolute top-3 left-3";
   const galleryBadgeClass =
-    "inline-flex items-center justify-center h-7 min-w-[74px] px-2.5 text-[10px] font-medium text-white/85 bg-black/40 backdrop-blur-sm rounded-full";
+    "inline-flex items-center justify-center h-5 px-3 md:h-7 md:min-w-[74px] md:px-2.5 text-[10px] font-medium text-white/85 bg-black/40 backdrop-blur-sm rounded-full";
   const scrollRef = useRef<HTMLDivElement>(null);
   const [scrollEl, setScrollEl] = useState<HTMLDivElement | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -181,7 +181,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
   /* ── Shared bottom bar ── */
   const bottomBar = (
-    <div className="shrink-0 backdrop-blur-sm pt-2 flex items-center justify-between gap-4">
+    <div className="shrink-0 backdrop-blur-sm pt-2 flex items-center justify-between gap-4 pb-2 sm:pb-0 px-2 sm:px-0">
       <div className="flex items-center gap-3 min-w-0">
         {/* Favicon */}
         <div className="flex items-center justify-center pointer-events-none h-9 w-9 rounded-xl bg-linear-to-br from-muted to-muted/50 border border-border/40 shrink-0 overflow-hidden">
