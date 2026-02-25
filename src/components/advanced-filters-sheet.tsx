@@ -8,21 +8,11 @@ import {
   SheetFooter,
   SheetClose,
 } from "@/components/ui/sheet";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerDescription,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerFooter,
-  DrawerClose,
-} from "@/components/ui/drawer";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { PrimaryButton } from "@/components/primary-button";
 
 import type { FilterState } from "@/lib/filter-sites";
-import { useIsMobile } from "@/hooks/use-mobile";
 
 interface AdvancedFiltersSheetProps {
   open: boolean;
@@ -39,8 +29,6 @@ export function AdvancedFiltersSheet({
   setFilters,
   counts,
 }: AdvancedFiltersSheetProps) {
-  const isMobile = useIsMobile();
-
   const toggleArrayFilter = (
     key: keyof Pick<FilterState, "aesthetics" | "effects" | "typography" | "composition" | "colorScheme" | "interaction">,
     value: string
@@ -97,74 +85,49 @@ export function AdvancedFiltersSheet({
     </div>
   );
 
-  const FilterContent = () => (
-    <div className="flex-1 overflow-y-auto px-6 py-4">
-      <div className="mb-6">
-        <h4 className="mb-3 text-sm font-medium text-foreground uppercase tracking-wider">Sort By</h4>
-        <div className="flex gap-2">
-          {["newest", "featured", "alphabetical"].map((opt) => (
-            <PrimaryButton
-              key={opt}
-              variant={filters.sort === opt ? "default" : "outline"}
-              size="sm"
-              onClick={() => setFilters((prev) => ({ ...prev, sort: opt as any }))}
-              className="capitalize active:scale-95 transition-transform"
-            >
-              {opt}
-            </PrimaryButton>
-          ))}
-        </div>
-      </div>
-
-      <Separator className="my-6" />
-
-      <FilterGroup title="Design Aesthetics" filterKey="aesthetics" options={counts.aesthetics || {}} />
-      <FilterGroup title="Visual Effects" filterKey="effects" options={counts.effects || {}} />
-      <FilterGroup title="Typography" filterKey="typography" options={counts.typography || {}} />
-      <FilterGroup title="Composition" filterKey="composition" options={counts.composition || {}} />
-      <FilterGroup title="Color Scheme" filterKey="colorScheme" options={counts.colorScheme || {}} />
-      <FilterGroup title="Interaction" filterKey="interaction" options={counts.interaction || {}} />
-    </div>
-  );
-
-  if (!isMobile) {
-    return (
-      <Sheet open={open} onOpenChange={onOpenChange}>
-        <SheetContent className="w-full sm:max-w-md overflow-hidden flex flex-col p-0">
-          <SheetHeader className="px-6 pt-6 pb-4 border-b">
-            <SheetTitle className="text-xl">Filters</SheetTitle>
-            <SheetDescription>Refine by design style, effects, and more.</SheetDescription>
-          </SheetHeader>
-          <FilterContent />
-          <SheetFooter className="px-6 py-6 border-t mt-auto bg-muted/20">
-            <PrimaryButton variant="outline" className="w-full" onClick={resetFilters}>
-              Reset all
-            </PrimaryButton>
-            <SheetClose render={<PrimaryButton className="w-full">Show Results</PrimaryButton>} />
-          </SheetFooter>
-        </SheetContent>
-      </Sheet>
-    );
-  }
-
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="h-[85vh] flex flex-col">
-        <DrawerHeader className="text-left px-6 border-b pb-4">
-          <DrawerTitle className="text-xl">Filters</DrawerTitle>
-          <DrawerDescription>Refine by design style, effects, and more.</DrawerDescription>
-        </DrawerHeader>
-        <FilterContent />
-        <DrawerFooter className="px-6 py-6 border-t bg-muted/20">
-          <PrimaryButton className="w-full" onClick={() => onOpenChange(false)}>Show Results</PrimaryButton>
+    <Sheet open={open} onOpenChange={onOpenChange}>
+      <SheetContent className="w-full sm:max-w-md overflow-hidden flex flex-col p-0">
+        <SheetHeader className="px-6 pt-6 pb-4 border-b">
+          <SheetTitle className="text-xl">Filters</SheetTitle>
+          <SheetDescription>Refine by design style, effects, and more.</SheetDescription>
+        </SheetHeader>
+
+        <div className="flex-1 overflow-y-auto px-6 py-4">
+          <div className="mb-6">
+            <h4 className="mb-3 text-sm font-medium text-foreground uppercase tracking-wider">Sort By</h4>
+            <div className="flex gap-2">
+              {["newest", "featured", "alphabetical"].map((opt) => (
+                <PrimaryButton
+                  key={opt}
+                  variant={filters.sort === opt ? "default" : "outline"}
+                  size="sm"
+                  onClick={() => setFilters((prev) => ({ ...prev, sort: opt as any }))}
+                  className="capitalize active:scale-95 transition-transform"
+                >
+                  {opt}
+                </PrimaryButton>
+              ))}
+            </div>
+          </div>
+
+          <Separator className="my-6" />
+
+          <FilterGroup title="Design Aesthetics" filterKey="aesthetics" options={counts.aesthetics || {}} />
+          <FilterGroup title="Visual Effects" filterKey="effects" options={counts.effects || {}} />
+          <FilterGroup title="Typography" filterKey="typography" options={counts.typography || {}} />
+          <FilterGroup title="Composition" filterKey="composition" options={counts.composition || {}} />
+          <FilterGroup title="Color Scheme" filterKey="colorScheme" options={counts.colorScheme || {}} />
+          <FilterGroup title="Interaction" filterKey="interaction" options={counts.interaction || {}} />
+        </div>
+
+        <SheetFooter className="px-6 py-6 border-t mt-auto bg-muted/20">
           <PrimaryButton variant="outline" className="w-full" onClick={resetFilters}>
             Reset all
           </PrimaryButton>
-          <DrawerClose asChild>
-            <PrimaryButton variant="ghost" className="w-full">Cancel</PrimaryButton>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          <SheetClose render={<PrimaryButton className="w-full">Show Results</PrimaryButton>} />
+        </SheetFooter>
+      </SheetContent>
+    </Sheet>
   );
 }

@@ -323,7 +323,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
           <MorphingDialogContainer>
             <MorphingDialogContent className="relative w-[90vw] max-w-none h-[88vh] flex flex-col bg-muted/90 backdrop-blur-3xl border border-border/40 overflow-hidden p-2 rounded-none pointer-events-auto shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)]">
-              <MorphingDialogClose className="absolute right-2 top-2 h-fit w-fit bg-background/50 backdrop-blur-xl border border-border/40 p-1.5 shadow-lg z-50 text-muted-foreground hover:text-foreground transition-colors cursor-pointer focus:outline-none" />
+              <MorphingDialogClose className="absolute right-3 top-3 z-50 flex items-center justify-center h-8 w-8 rounded-full bg-black/60 text-white/80 hover:bg-black/80 hover:text-white border border-white/10 shadow-md transition-all duration-150 active:scale-90 cursor-pointer focus:outline-none" />
 
               <div className="flex flex-col flex-1 min-h-0 overflow-hidden">
                 {galleryContent}

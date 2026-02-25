@@ -124,9 +124,9 @@ export function HomePage() {
             <div className="pointer-events-auto">
 
               {/* Opaque Sticky Mask to hide sliding cards and hold FilterBar */}
-              <div className="sticky top-16 z-20 w-full">
+              <div className="sticky top-16 z-20 w-full bg-background">
                 <div className="pt-2 px-2 border-t border-x border-b-0 border-border/40 bg-black/5 backdrop-blur-xl shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] dark:bg-white/5">
-                  <div className="border border-border/50 border-b-0 py-2 px-10 pb-0 rounded-t-2xl bg-background relative z-10 w-full flex flex-col">
+                  <div className="border border-border/50 border-b-0 py-2 px-4 md:px-10 pb-0 rounded-t-2xl bg-background relative z-10 w-full flex flex-col">
                     <FilterBar
                       filters={filters}
                       setFilters={setFilters}

@@ -66,26 +66,40 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, classNam
   ].length + (filters.featured ? 1 : 0);
 
   return (
-    <div className={cn("w-full space-y-6 bg-background/95 backdrop-blur-md py-4 shrink-0", className || "sticky top-0 z-30")}>
-      <div className="flex flex-wrap gap-3 items-center justify-between">
+    <div className={cn("w-full space-y-3 bg-background/95 backdrop-blur-md py-4 shrink-0", className || "sticky top-0 z-30")}>
+      {/* Categories */}
+      <Tabs value={filters.category} onValueChange={handleCategoryChange} className="w-full overflow-hidden">
+        <TabsList className="bg-muted/50 p-1 h-auto flex-nowrap justify-start gap-1 overflow-x-auto w-full scrollbar-hide">
+          {CATEGORIES.map((cat) => (
+            <TabsTrigger
+              key={cat}
+              value={cat}
+              className="capitalize px-2"
+            >
+              {cat}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
 
-        {/* Categories */}
-        <Tabs value={filters.category} onValueChange={handleCategoryChange} className="w-full md:w-auto overflow-hidden">
-          <TabsList className="bg-muted/50 p-1 h-auto flex-nowrap justify-start gap-1 overflow-x-auto w-full md:w-auto scrollbar-hide">
-            {CATEGORIES.map((cat) => (
-              <TabsTrigger
-                key={cat}
-                value={cat}
-                className="capitalize px-2"
-              >
-                {cat}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-        </Tabs>
+      {/* Quick Design Tags + Filter Trigger */}
+      <div className="flex items-center gap-2 pb-4">
+        {/* Scrollable chips */}
+        <div className="flex gap-2 overflow-x-auto scrollbar-hide items-center flex-1 min-w-0">
+          {DESIGN_QUICK_TAGS.map(tag => (
+            <Badge
+              key={tag}
+              variant={filters.aesthetics.includes(tag) ? "default" : "outline"}
+              className="cursor-pointer transition-all w-auto capitalize duration-200 whitespace-nowrap rounded-md text-sm h-7 active:scale-95 shrink-0"
+              onClick={() => toggleAesthetic(tag)}
+            >
+              {tag}
+            </Badge>
+          ))}
+        </div>
 
-        {/* Filter Trigger */}
-        <div className="flex items-center gap-2 ml-auto">
+        {/* Filter Trigger — always visible, never clipped */}
+        <div className="flex items-center gap-2 shrink-0">
           {(activeFilterCount > 0 || filters.search) && (
             <PrimaryButton variant="ghost" onClick={clearFilters} className="text-muted-foreground hover:text-foreground" iconLeft={<HugeiconsIcon icon={X} className="h-4 w-4 mr-2" />}>
               Clear
@@ -103,20 +117,6 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, classNam
             </motion.span>
           </PrimaryButton>
         </div>
-      </div>
-
-      {/* Quick Design Tags */}
-      <div className="flex gap-2 overflow-x-auto md:flex-wrap pb-4 scrollbar-hide">
-        {DESIGN_QUICK_TAGS.map(tag => (
-          <Badge
-            key={tag}
-            variant={filters.aesthetics.includes(tag) ? "default" : "outline"}
-            className="cursor-pointer transition-all w-auto capitalize duration-200 whitespace-nowrap rounded-md text-sm h-7 active:scale-95"
-            onClick={() => toggleAesthetic(tag)}
-          >
-            {tag}
-          </Badge>
-        ))}
       </div>
     </div>
   );
