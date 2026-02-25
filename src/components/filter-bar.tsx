@@ -66,10 +66,10 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, classNam
   ].length + (filters.featured ? 1 : 0);
 
   return (
-    <div className={cn("w-full space-y-3 bg-background/95 backdrop-blur-md py-4 shrink-0", className || "sticky top-0 z-30")}>
+    <div className={cn("w-full space-y-1 md:space-y-3 bg-background/95 backdrop-blur-md md:pt-2 shrink-0", className || "sticky top-0 z-30")}>
       {/* Categories */}
-      <Tabs value={filters.category} onValueChange={handleCategoryChange} className="w-full overflow-hidden">
-        <TabsList className="bg-muted/50 p-1 h-auto flex-nowrap justify-start gap-1 overflow-x-auto w-full scrollbar-hide">
+      <Tabs value={filters.category} onValueChange={handleCategoryChange} className="overflow-hidden">
+        <TabsList className="bg-muted/50 p-1 h-auto flex-nowrap justify-start gap-1 overflow-x-auto scrollbar-hide">
           {CATEGORIES.map((cat) => (
             <TabsTrigger
               key={cat}
@@ -83,7 +83,7 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, classNam
       </Tabs>
 
       {/* Quick Design Tags + Filter Trigger */}
-      <div className="flex items-center gap-2 pb-4">
+      <div className="flex items-center gap-2">
         {/* Scrollable chips */}
         <div className="flex gap-2 overflow-x-auto scrollbar-hide items-center flex-1 min-w-0">
           {DESIGN_QUICK_TAGS.map(tag => (
