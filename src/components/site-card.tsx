@@ -316,7 +316,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
           }}
         >
           <MorphingDialogTrigger
-            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left"
+            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left rounded-3xl"
           >
             {triggerContent}
           </MorphingDialogTrigger>

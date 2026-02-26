@@ -109,9 +109,9 @@ export function HomePage() {
           <HorizontalLine />
         </div>
 
-        <div className="relative w-full max-w-7xl mx-auto">
+        <div className="relative w-full max-w-7xl mx-auto px-0 md:px-0">
           {/* Layer 1: Visual Sticky Container Background */}
-          <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-x-0 top-0 bottom-0 z-0 pointer-events-none">
             <div className="sticky top-16 h-[calc(100vh-4rem)] w-full">
               <Container className="w-full h-full">
                 <div className="hidden" />
@@ -124,9 +124,9 @@ export function HomePage() {
             <div className="pointer-events-auto">
 
               {/* Opaque Sticky Mask to hide sliding cards and hold FilterBar */}
-              <div className="sticky top-16 z-20 w-full bg-background">
+              <div className="sticky top-16 z-20 w-full bg-background mt-4 md:mt-0">
                 <div className="pt-2 px-2 border-t border-x border-b-0 border-border/40 bg-black/5 backdrop-blur-xl shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] dark:bg-white/5">
-                  <div className="border bg-background border-border/50 border-b-0 pt-2 px-4 md:px-10 pb-2 rounded-t-2xl relative z-10 w-full flex flex-col">
+                  <div className="border bg-background border-border/50 border-b-0 pt-2 px-2 md:px-4 lg:px-10 pb-2 rounded-t-2xl relative z-20 w-full flex flex-col">
                     <FilterBar
                       filters={filters}
                       setFilters={setFilters}
@@ -141,6 +141,27 @@ export function HomePage() {
               <main className="w-full px-[calc(0.5rem+1px+0.5rem)] md:px-[calc(0.5rem+1px+1rem)] lg:px-[calc(0.5rem+1px+2.5rem)] pt-1 md:pt-4 pb-12 relative z-10 border-x border-transparent">
                 <SiteGrid sites={filteredSites} isLoading={isMounting} />
               </main>
+
+              {/* Clean Bottom Edge (No Glass) */}
+              <div className="sticky bottom-0 z-20 w-full pointer-events-none bg-background">
+                <div className="px-2.5 pb-2.5 pt-0 backdrop-blur-3xl bg-black/5 dark:bg-white/5 
+shadow-[
+  inset_0_-2px_5px_var(--color-neutral-300),
+  inset_2px_0_5px_var(--color-neutral-300),
+  inset_-2px_0_5px_var(--color-neutral-300)
+]
+dark:shadow-[
+  inset_0_-2px_5px_var(--color-neutral-700),
+  inset_2px_0_5px_var(--color-neutral-700),
+  inset_-2px_0_5px_var(--color-neutral-700)
+]
+                ">
+
+                  <div className="bg-linear-to-b from-white dark:from-black to-background rounded-b-2xl h-3" />
+
+
+                </div>
+              </div>
 
               <AdvancedFiltersSheet
                 open={isAdvancedOpen}

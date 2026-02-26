@@ -68,8 +68,8 @@ export function FilterBar({ filters, setFilters, onOpenAdvancedFilters, classNam
   return (
     <div className={cn("w-full space-y-1 md:space-y-3 bg-background/95 backdrop-blur-md md:pt-2 shrink-0", className || "sticky top-0 z-30")}>
       {/* Categories */}
-      <Tabs value={filters.category} onValueChange={handleCategoryChange} className="overflow-hidden">
-        <TabsList className="bg-muted/50 p-1 h-auto flex-nowrap justify-start gap-1 overflow-x-auto scrollbar-hide">
+      <Tabs value={filters.category} onValueChange={handleCategoryChange} className="overflow-hidden w-full md:w-fit">
+        <TabsList className="bg-muted/50 p-1 h-auto w-full md:w-fit flex-nowrap justify-start gap-1 overflow-x-auto scrollbar-hide">
           {CATEGORIES.map((cat) => (
             <TabsTrigger
               key={cat}
