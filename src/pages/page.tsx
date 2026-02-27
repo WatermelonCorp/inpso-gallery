@@ -1,19 +1,25 @@
 
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
 import { sites, type SiteMetadata } from "@/content/sites";
 import { filterSites, initialFilterState, type FilterState } from "@/lib/filter-sites";
 import { FilterBar } from "@/components/filter-bar";
 import { SiteGrid } from "@/components/site-grid";
-import { AdvancedFiltersSheet } from "@/components/advanced-filters-sheet";
 import { Container } from "@/components/layout/container";
 import { HorizontalLine } from "@/components/layout/line";
+import { SEOHead } from "@/components/SEOHead";
+import { generateHomepageSEO } from "@/lib/seo";
 
 
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
-  const [isMounting, setIsMounting] = useState(true);
+
+  const AdvancedFiltersSheet = lazy(() =>
+    import("@/components/advanced-filters-sheet").then((module) => ({
+      default: module.AdvancedFiltersSheet,
+    }))
+  );
 
   // Initialize state from URL params if available, otherwise default
   const [filters, setFilters] = useState<FilterState>(() => {
@@ -52,11 +58,12 @@ export function HomePage() {
     setSearchParams(params, { replace: true });
   }, [filters, setSearchParams]);
 
-  // Simulate initial load for smooth transition
+  // Reset filters when URL params are cleared (e.g. logo click)
   useEffect(() => {
-    const timer = setTimeout(() => setIsMounting(false), 500);
-    return () => clearTimeout(timer);
-  }, []);
+    if (!searchParams.toString()) {
+      setFilters(initialFilterState);
+    }
+  }, [searchParams]);
 
   const filteredSites = useMemo(() => {
     return filterSites(sites, filters);
@@ -87,16 +94,28 @@ export function HomePage() {
     };
   }, []);
 
+  const seoData = useMemo(
+    () => generateHomepageSEO(sites.map((site) => ({ name: site.name, url: site.url }))),
+    []
+  );
 
 
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans relative">
+      <SEOHead
+        title={seoData.title}
+        description={seoData.description}
+        keywords={seoData.keywords}
+        canonical={seoData.canonical}
+        ogImage={seoData.ogImage}
+        jsonLd={seoData.jsonLd}
+      />
       {/* Decorative blurred orbs */}
       <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
-        <div className="absolute top-1/3 -right-48 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-32 left-1/3 w-80 h-80 bg-primary/6 rounded-full blur-3xl" />
+        <div className="absolute hidden md:block -top-32 -left-32 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
+        <div className="absolute hidden md:block top-1/3 -right-48 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl" />
+        <div className="absolute hidden md:block -bottom-32 left-1/3 w-80 h-80 bg-primary/6 rounded-full blur-3xl" />
       </div>
 
       <div className="mx-auto relative z-10">
@@ -120,11 +139,11 @@ export function HomePage() {
           </div>
 
           {/* Layer 2: Scrolling Content */}
-          <div className="relative z-10 w-full pointer-events-none">
-            <div className="pointer-events-auto">
+          <div className="relative z-10 w-full pointer-events-none flex flex-col min-h-[calc(100vh-4rem)]">
+            <div className="pointer-events-auto flex flex-col flex-1">
 
               {/* Opaque Sticky Mask to hide sliding cards and hold FilterBar */}
-              <div className="sticky top-16 z-20 w-full bg-background mt-4 md:mt-0">
+              <div className="sticky top-16 z-20 w-full bg-background">
                 <div className="pt-2 px-2 border-t border-x border-b-0 border-border/40 bg-black/5 backdrop-blur-xl shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] dark:bg-white/5">
                   <div className="border bg-background border-border/50 border-b-0 pt-2 px-2 md:px-4 lg:px-10 pb-2 rounded-t-2xl relative z-20 w-full flex flex-col">
                     <FilterBar
@@ -138,38 +157,27 @@ export function HomePage() {
               </div>
 
               {/* Grid Content */}
-              <main className="w-full px-[calc(0.5rem+1px+0.5rem)] md:px-[calc(0.5rem+1px+1rem)] lg:px-[calc(0.5rem+1px+2.5rem)] pt-1 md:pt-4 pb-12 relative z-10 border-x border-transparent">
-                <SiteGrid sites={filteredSites} isLoading={isMounting} />
+              <main className="flex-1 w-full px-[calc(0.5rem+1px+0.5rem)] md:px-[calc(0.5rem+1px+1rem)] lg:px-[calc(0.5rem+1px+2.5rem)] pt-1 md:pt-4 pb-12 relative z-10 border-x border-transparent">
+                <SiteGrid sites={filteredSites} />
               </main>
 
-              {/* Clean Bottom Edge (No Glass) */}
+              {/* Clean Bottom Edge */}
               <div className="sticky bottom-0 z-20 w-full pointer-events-none bg-background">
-                <div className="px-2.5 pb-2.5 pt-0 backdrop-blur-3xl bg-black/5 dark:bg-white/5 
-shadow-[
-  inset_0_-2px_5px_var(--color-neutral-300),
-  inset_2px_0_5px_var(--color-neutral-300),
-  inset_-2px_0_5px_var(--color-neutral-300)
-]
-dark:shadow-[
-  inset_0_-2px_5px_var(--color-neutral-700),
-  inset_2px_0_5px_var(--color-neutral-700),
-  inset_-2px_0_5px_var(--color-neutral-700)
-]
-                ">
-
-                  <div className="bg-linear-to-b from-white dark:from-black to-background rounded-b-2xl h-3" />
-
-
+                <div className="pb-2 px-2 border-b border-x border-t-0 border-border/40 bg-black/5 backdrop-blur-xl shadow-[inset_0_-2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_-2px_5px_var(--color-neutral-700)] dark:bg-white/5">
+                  <div className="border bg-background border-border/50 border-t-0 pb-2 px-2 md:px-4 lg:px-10 pt-2 rounded-b-2xl relative z-20 w-full" />
                 </div>
               </div>
-
-              <AdvancedFiltersSheet
-                open={isAdvancedOpen}
-                onOpenChange={setIsAdvancedOpen}
-                filters={filters}
-                setFilters={setFilters}
-                counts={counts}
-              />
+              {isAdvancedOpen && (
+                <Suspense fallback={null}>
+                  <AdvancedFiltersSheet
+                    open={isAdvancedOpen}
+                    onOpenChange={setIsAdvancedOpen}
+                    filters={filters}
+                    setFilters={setFilters}
+                    counts={counts}
+                  />
+                </Suspense>
+              )}
             </div>
           </div>
         </div>

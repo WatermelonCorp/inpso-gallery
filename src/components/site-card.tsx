@@ -220,11 +220,19 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
         {/* Thumbnail — fills entire card */}
         <div className="relative aspect-4/3 md:aspect-16/10 overflow-hidden">
-          <img
-            src={site.thumbnail}
-            alt={site.name}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <picture>
+            <source
+              srcSet={site.thumbnail.replace(/\.(png|jpg)$/, '.webp')}
+              type="image/webp"
+            />
+            <img
+              src={site.thumbnail}
+              alt={site.name}
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              fetchPriority="high"
+              loading="eager"
+            />
+          </picture>
           {/* Overlay gradient on hover */}
           <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
@@ -236,10 +244,11 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
           {site.name}
         </h3>
         <a
-          className="text-muted-foreground hover:text-foreground transition-colors inline-block cursor-pointer"
+          className="text-muted-foreground hover:text-foreground transition-colors flex items-center justify-center h-8 w-8 rounded-md hover:bg-muted cursor-pointer shrink-0"
           href={site.url}
           target="_blank"
           rel="noopener noreferrer"
+          aria-label={`Visit ${site.name}`}
         >
           <HugeiconsIcon icon={ArrowUpRight01Icon} className="h-3.5 w-3.5" />
         </a>
@@ -254,7 +263,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
           {/* ── Mobile: Bottom Drawer Trigger ── */}
           <motion.div
             onClick={() => setIsOpen(true)}
-            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left"
+            className="group relative border border-border/40 bg-black/5 shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left"
             whileHover={{ y: -2 }}
             transition={{ duration: 0.2 }}
           >
@@ -316,7 +325,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
           }}
         >
           <MorphingDialogTrigger
-            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left rounded-3xl"
+            className="group relative border border-border/4 bg-black/5 shadow-[inset_0_2px_5px_var(--color-neutral-300)] dark:shadow-[inset_0_2px_5px_var(--color-neutral-700)] backdrop-blur-lg dark:bg-white/5 cursor-pointer p-2 w-full text-left"
           >
             {triggerContent}
           </MorphingDialogTrigger>

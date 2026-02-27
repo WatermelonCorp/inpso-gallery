@@ -1,6 +1,7 @@
 import { HorizontalLine } from "./line"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { GithubIcon, NewTwitterIcon } from "@hugeicons/core-free-icons"
+import { Logo } from "./logo"
 
 export function Footer() {
   return (
@@ -13,12 +14,7 @@ export function Footer() {
         {/* Main footer row */}
         <div className="py-6 sm:py-8 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 px-4">
           {/* Brand */}
-          <div className="flex items-center gap-2">
-            <div className="h-7 w-7 rounded-lg overflow-hidden">
-              <img src="/logo.png" alt="Logo" className="h-7 w-7 rounded-lg" />
-            </div>
-            <span className="text-sm font-medium tracking-tight">Watermelon</span>
-          </div>
+          <Logo />
 
           {/* Links */}
           <nav className="flex items-center gap-1">
@@ -26,6 +22,7 @@ export function Footer() {
               href="https://github.com/WatermelonCorp"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="GitHub"
               className="text-xs text-muted-foreground hover:text-foreground size-8 md:size-10 flex items-center justify-center hover:bg-muted rounded-md active:scale-95 transition-all duration-200"
             >
               <HugeiconsIcon icon={GithubIcon} size={18} />
@@ -34,6 +31,7 @@ export function Footer() {
               href="https://x.com/watermelonshHQ"
               target="_blank"
               rel="noopener noreferrer"
+              aria-label="Twitter / X"
               className="text-xs text-muted-foreground hover:text-foreground size-8 md:size-10 flex items-center justify-center hover:bg-muted rounded-md active:scale-95 transition-all duration-200"
             >
               <HugeiconsIcon icon={NewTwitterIcon} size={18} />
@@ -46,10 +44,10 @@ export function Footer() {
 
         {/* Copyright row */}
         <div className="py-4 flex flex-col sm:flex-row items-center justify-between gap-2 sm:gap-0 px-4 text-center sm:text-left">
-          <p className="text-[11px] text-muted-foreground/60">
+          <p className="text-[11px] text-muted-foreground">
             © {new Date().getFullYear()} Watermelon. All rights reserved.
           </p>
-          <p className="text-[11px] text-muted-foreground/40">
+          <p className="text-[11px] text-muted-foreground/80">
             Curated with care
           </p>
         </div>

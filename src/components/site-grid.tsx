@@ -33,7 +33,7 @@ export function SiteGrid({ sites, isLoading = false }: SiteGridProps) {
 
   if (sites.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-20 text-center">
+      <div className="flex flex-col items-center justify-center flex-1 w-full min-h-64 text-center">
         <h3 className="text-xl font-semibold mb-2">No results found</h3>
         <p className="text-muted-foreground max-w-sm">
           Try adjusting your filters or search terms to find what you're looking for.

@@ -2,10 +2,17 @@ import { Link } from "react-router-dom";
 import { Container } from "@/components/layout/container";
 import { buttonVariants } from "@/components/ui/button";
 import { MoveLeft } from "lucide-react";
+import { SEOHead } from "@/components/SEOHead";
 
 export function NotFoundPage() {
   return (
     <div className="h-full bg-background text-foreground font-sans relative flex items-center justify-center overflow-hidden">
+      <SEOHead
+        title="404 — Page Not Found | Watermelon"
+        description="The page you are looking for could not be found."
+        canonical="https://watermelon-ui.com/404"
+        noindex
+      />
       {/* Decorative blurred orbs */}
       <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden flex items-center justify-center">
         <div className="absolute -top-32 -left-32 w-96 h-96 bg-primary/8 rounded-full blur-3xl" />
