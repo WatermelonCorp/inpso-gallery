@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+message Tweet {
+  string name = 1;
+  string slug = 2;
+  string url = 3;
+  string description = 4;
+  string category = 5;
+  repeated string tags = 6;
+  repeated string aesthetics = 7;
+  repeated string effects = 8;
+  repeated string typography = 9;
+  repeated string composition = 10;
+  repeated string colorScheme = 11;
+  repeated string interaction = 12;
+  bool featured = 13;
+  string thumbnail = 14;
+  repeated string images = 15;
+  string date = 16;
+  string socialLink = 17;
+}
+
+message TweetList {
+  repeated Tweet tweets = 1;
+}
