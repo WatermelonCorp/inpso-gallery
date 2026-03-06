@@ -1,7 +1,8 @@
 
 import { useState, useMemo, useEffect, lazy, Suspense } from "react";
 import { useSearchParams } from "react-router-dom";
-import { sites, type SiteMetadata } from "@/content/sites";
+import { type SiteMetadata } from "@/content/sites";
+import { fetchLiveTweets } from "@/lib/fetchLiveTweets";
 import { filterSites, initialFilterState, type FilterState } from "@/lib/filter-sites";
 import { FilterBar } from "@/components/filter-bar";
 import { SiteGrid } from "@/components/site-grid";
@@ -14,6 +15,14 @@ import { generateHomepageSEO } from "@/lib/seo";
 export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
+  const [sites, setSites] = useState<SiteMetadata[]>([]);
+  useEffect(() => {
+    async function load() {
+      const data = await fetchLiveTweets();
+      setSites(data);
+    }
+    load();
+  }, []);
 
   const AdvancedFiltersSheet = lazy(() =>
     import("@/components/advanced-filters-sheet").then((module) => ({
@@ -67,7 +76,7 @@ export function HomePage() {
 
   const filteredSites = useMemo(() => {
     return filterSites(sites, filters);
-  }, [filters]);
+  }, [filters, sites]);
 
   // Extract unique counts for design-centric filters
   const counts = useMemo(() => {
@@ -92,11 +101,11 @@ export function HomePage() {
       colorScheme: getCounts("colorScheme"),
       interaction: getCounts("interaction"),
     };
-  }, []);
+  }, [sites]);
 
   const seoData = useMemo(
     () => generateHomepageSEO(sites.map((site) => ({ name: site.name, url: site.url }))),
-    []
+    [sites]
   );
 
 

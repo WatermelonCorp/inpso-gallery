@@ -29,18 +29,9 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
   const [isOpen, setIsOpen] = useState(false);
   const isMobile = useIsMobile();
 
-  const buildGallery = (): string[] => {
-    const base: string[] = site.images?.length ? site.images : [site.thumbnail];
-    const filled: string[] = [];
-    for (let i = 0; i < 4; i++) {
-      filled.push(base[i % base.length]);
-    }
-    return filled;
-  };
-
-  const galleryImages = buildGallery();
+  const galleryImages = site.images?.length ? site.images : [site.thumbnail];
   const galleryItemClass =
-    "relative w-full shrink-0 aspect-16/10 rounded-xl overflow-hidden border border-border/40 bg-muted/40";
+    "relative w-full shrink-0 flex items-center justify-center rounded-xl overflow-hidden border border-border/40 bg-muted/40 px-2 py-4";
   const galleryBadgeWrapClass = "absolute top-3 left-3";
   const galleryBadgeClass =
     "inline-flex items-center justify-center h-5 px-3 md:h-7 md:min-w-[74px] md:px-2.5 text-[10px] font-medium text-white/85 bg-black/40 backdrop-blur-sm rounded-full";
@@ -137,7 +128,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
             <img
               src={img}
               alt={`${site.name} screenshot ${i}`}
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-[85vh] object-contain w-auto mx-auto"
               loading="lazy"
             />
             {/* Image number label */}
@@ -220,19 +211,13 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
 
         {/* Thumbnail — fills entire card */}
         <div className="relative aspect-4/3 md:aspect-16/10 overflow-hidden">
-          <picture>
-            <source
-              srcSet={site.thumbnail.replace(/\.(png|jpg)$/, '.webp')}
-              type="image/webp"
-            />
-            <img
-              src={site.thumbnail}
-              alt={site.name}
-              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-              fetchPriority="high"
-              loading="eager"
-            />
-          </picture>
+          <img
+            src={site.thumbnail}
+            alt={site.name}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+            fetchPriority="high"
+            loading="eager"
+          />
           {/* Overlay gradient on hover */}
           <div className="absolute inset-0 bg-linear-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
         </div>
@@ -298,7 +283,7 @@ export function SiteCardWithModal({ site }: SiteCardWithModalProps) {
                     <img
                       src={img}
                       alt={`${site.name} screenshot ${i}`}
-                      className="w-full h-full object-cover"
+                      className="max-w-full max-h-[85vh] object-contain w-auto mx-auto"
                       loading="lazy"
                     />
                     <div className={galleryBadgeWrapClass}>
