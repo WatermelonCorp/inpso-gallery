@@ -6,8 +6,8 @@ export async function fetchLiveTweets(): Promise<SiteMetadata[]> {
         const root = await protobuf.load('/tweets.proto');
         const TweetList = root.lookupType('TweetList');
 
-        // Fetch data from local HTTP server
-        const response = await fetch('http://localhost:8080/data');
+        // Fetch data from local static file
+        const response = await fetch('/tweets.bin');
         if (!response.ok) {
             throw new Error(`Failed to fetch data: ${response.statusText}`);
         }
