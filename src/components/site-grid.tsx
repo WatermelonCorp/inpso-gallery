@@ -15,7 +15,7 @@ export function SiteGrid({ sites, isLoading = false }: SiteGridProps) {
         {[...Array(8)].map((_, i) => (
           <div
             key={i}
-            className="group relative border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 p-2 w-full text-left"
+            className="group relative rounded-2xl border border-border/40 bg-black/5 shadow-inner shadow-black/10 dark:shadow-white/10 backdrop-blur-lg dark:bg-white/5 p-2 w-full text-left"
           >
             <div className="overflow-hidden rounded-2xl border border-border/40 shadow-sm">
               <div className="relative aspect-4/3 md:aspect-16/10 overflow-hidden bg-muted/60 animate-pulse" />

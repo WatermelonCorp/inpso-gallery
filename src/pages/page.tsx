@@ -16,10 +16,15 @@ export function HomePage() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [isAdvancedOpen, setIsAdvancedOpen] = useState(false);
   const [sites, setSites] = useState<SiteMetadata[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
     async function load() {
-      const data = await fetchLiveTweets();
-      setSites(data);
+      try {
+        const data = await fetchLiveTweets();
+        setSites(data);
+      } finally {
+        setIsLoading(false);
+      }
     }
     load();
   }, []);
@@ -167,7 +172,7 @@ export function HomePage() {
 
               {/* Grid Content */}
               <main className="flex-1 w-full px-[calc(0.5rem+1px+0.5rem)] md:px-[calc(0.5rem+1px+1rem)] lg:px-[calc(0.5rem+1px+2.5rem)] pt-1 md:pt-4 pb-12 relative z-10 border-x border-transparent">
-                <SiteGrid sites={filteredSites} />
+                <SiteGrid sites={filteredSites} isLoading={isLoading} />
               </main>
 
               {/* Clean Bottom Edge */}
