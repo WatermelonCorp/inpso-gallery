@@ -48,7 +48,7 @@ export function Footer() {
             © {new Date().getFullYear()} Watermelon. All rights reserved.
           </p>
           <p className="text-[11px] text-muted-foreground/80">
-            Curated with care
+            Showcase of perfection
           </p>
         </div>
       </div>
